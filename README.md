@@ -189,7 +189,7 @@ window.requestAnimationFrame(function () {
             });
         }
         ```
-        - 调用`this.grid.eachCell()`对每个方格执行函数，该函数检查当前方格上是否存在方块，若存在则储存其位置并将其合并源位置清空        - 
+        - 调用`this.grid.eachCell()`对每个方格执行函数，该函数检查当前方格上是否存在方块，若存在则储存其位置并将其合并源位置清空
 
     10. `moveTile(tile, cell)` : 将一个方块移动到另一个方格上
         ```
@@ -742,3 +742,303 @@ if (!window.cancelAnimationFrame) {
         ```
 
 ---
+
+### `/js/grid.js` : 方格类
+定义Grid类
+1. 构造函数
+    ```
+    constructor(size, previousState) {
+        this.size = size;
+        this.cells = previousState ? this.fromState(previousState) : this.empty();
+    }
+    ```
+    - 设置边长为`this.size`
+    - 若有之前游戏的存档则载入；若没有则初始化一个`empty()`的方格
+
+2. 对象方法
+    1. `empty()` ： 返回一个指定边长的空背景方格
+        ```
+        empty() {
+            var cells = [];
+            for (var x = 0; x < this.size; x++) {
+                var row = cells[x] = [];
+                for (var y = 0; y < this.size; y++) {
+                    row.push(null);
+                }
+            }
+            return cells;
+        }
+        ```
+        - 新建一个`size x size`的二维数组并返回
+
+    2. `fromState(state)` ： 尝试读取可能存在的存档
+        ```
+        fromState(state) {
+            var cells = [];
+            for (var x = 0; x < this.size; x++) {
+                var row = cells[x] = [];
+                for (var y = 0; y < this.size; y++) {
+                    var tile = state[x][y];
+                    row.push(tile ? new Tile(tile.position, tile.value) : null);
+                }
+            }
+            return cells;
+        }
+        ```
+        - 若存在存档则通过`new Tile`对其数据进行恢复，若不存在返回null
+
+    3. `randomAvailableCell()` ： 返回一个当前随机的可用方格
+        ```
+        randomAvailableCell() {
+            var cells = this.availableCells();
+            if (cells.length) {
+                return cells[Math.floor(Math.random() * cells.length)];
+            }
+        }
+        ```
+        - 在可用方格数组中随机选择一个
+
+    4. `availableCells()` ： 返回当前可用的方格数组
+        ```
+        availableCells() {
+            var cells = [];
+            this.eachCell(function (x, y, tile) {
+                if (!tile) {
+                    cells.push({ x: x, y: y });
+                }
+            });
+            return cells;
+        }
+        ```
+        - 调用`this.eachCell()`对每个方格进行遍历
+        - 如果方格上不存在方块则将其信息计入`cells`数组，返回`cells`
+
+    5. `eachCell(callback)` ： 遍历方格
+        ```
+        eachCell(callback) {
+            for (var x = 0; x < this.size; x++) {
+                for (var y = 0; y < this.size; y++) {
+                    callback(x, y, this.cells[x][y]);
+                }
+            }
+        }
+        ```
+        - 对每个方格绑定回调函数`callback`
+
+    6. `cellsAvailable()` ： 检查是否存在可用方格
+        ```
+        cellsAvailable() {
+            return !!this.availableCells().length;
+        }
+        ```
+        - 将`number`型强制转为`boolen`型，若当前存在方格可用返回`True`
+
+    7. `cellAvailable(cell)` ： 检查指定方格是否已被占用
+        ```
+        cellAvailable(cell) {
+            return !this.cellOccupied(cell);
+        }
+        ```
+
+    8. `cellOccupied(cell)` ： 返回指定方格是否被占用
+        ```
+        cellOccupied(cell) {
+            return !!this.cellContent(cell);
+        }
+        ```
+
+    9. `cellContent(cell)` ： 检查指定位置是否在背景方格范围内
+        ```
+        cellContent(cell) {
+            if (this.withinBounds(cell)) {
+                return this.cells[cell.x][cell.y];
+            }
+            else {
+                return null;
+            }
+        }
+        ```
+        - 若`cell`在背景方格边界内则返回对应的方格元素，否则返回`null`
+
+    10. `insertTile(tile)` ： 在指定方格位置插入方块
+        ```
+        insertTile(tile) {
+            this.cells[tile.x][tile.y] = tile;
+        }
+        ```
+
+    11. `removeTile(tile)` ： 从指定位置移除方块
+        ```
+        removeTile(tile) {
+            this.cells[tile.x][tile.y] = null;
+        }
+        ```
+
+    12. `withinBounds(position)` ： 判断某个坐标是否在背景方格边界内
+        ```
+        withinBounds(position) {
+            return position.x >= 0 && position.x < this.size && position.y >= 0 && position.y < this.size;
+        }
+        ```
+        - 当且仅当X，Y坐标均满足条件时返回`True`
+
+    13. `serialize()` ： 返回序列化的每个方块的状态
+        ```
+        serialize() {
+            var cellState = [];
+            for (var x = 0; x < this.size; x++) {
+                var row = cellState[x] = [];
+                for (var y = 0; y < this.size; y++) {
+                    row.push(this.cells[x][y] ? this.cells[x][y].serialize() : null);
+                }
+            }
+            return {
+                size: this.size,
+                cells: cellState
+            };
+        }
+        ```
+        - 遍历背景方格的二维数组，用数组序列化储存每个方格的信息并返回
+
+---
+
+### `/js/tile.js` : 方块类
+定义Tile类
+1. 构造函数
+    ```
+    constructor(position, value) {
+        this.x = position.x;
+        this.y = position.y;
+        this.value = value || 2;
+        this.previousPosition = null;
+        this.mergedFrom = null;
+    }
+    ```
+    - `x`, `y`分别保存方块的位置信息
+    - `value`保存方块的值，若创建对象实例时未提供则默认值为2
+    - `previousPosition`保存方块移动前的位置信息
+    - `mergedFrom`保存方块合并事件的信息
+
+2. 对象方法
+    1. `savePosition()` : 储存移动前的位置信息
+        ```
+        savePosition() {
+            this.previousPosition = { x: this.x, y: this.y };
+        }
+        ```
+
+    2. `updatePosition(position)` : 更新方块位置信息
+        ```
+        updatePosition(position) {
+            this.x = position.x;
+            this.y = position.y;
+        }
+        ```
+
+    3. `serialize()` : 返回格式化的方块信息
+        ```
+        serialize() {
+            return {
+                position: {
+                    x: this.x,
+                    y: this.y
+                },
+                value: this.value
+            };
+        }
+        ```
+
+---
+
+### `/js/local_storage_manager.js` : 处理本地储存
+本地读写设置
+    ```
+    window.fakeStorage = {
+        _data: {},
+        
+        setItem: function (id, val) {
+            return this._data[id] = String(val);
+        },
+        
+        getItem: function (id) {
+            return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
+        },
+        
+        removeItem: function (id) {
+            return delete this._data[id];
+        },
+        
+        clear: function () {
+            return this._data = {};
+        }
+    };
+    ```
+    - 一个替代方法，利用列表解析来在`window.localStorage`不被支持的情况下储存游戏
+    - 分别实现了读、写、删除与清空功能
+
+定义LocalStorageManager类
+
+1. 构造函数
+    ```
+    constructor() {
+        this.bestScoreKey = "bestScore";
+        this.gameStateKey = "gameState";
+        var supported = this.localStorageSupported();
+        this.storage = supported ? window.localStorage : window.fakeStorage;
+    }
+    ```
+    - 先把`bestScoreKey`和`gameStateKey`的键赋为`bestScore`与`gameState`
+    - 通过`this.localStorageSupported()`测试浏览器是否支持`window.localStorage`，若不支持则采用`window.fakeStorage`
+
+
+2. 对象方法
+    1. `localStorageSupported()` ： 
+        ```
+        localStorageSupported() {
+            var testKey = "test";
+            try {
+                var storage = window.localStorage;
+                storage.setItem(testKey, "1");
+                storage.removeItem(testKey);
+                return true;
+            }
+            catch (error) {
+                return false;
+            }
+        }
+        ```
+        - 用`try...catch`尝试通过`window.localStorage`方法储存，若报错则改用`window.fakeStorage`
+    
+    2. `getBestScore()`/`setBestScore(score)` ： 读/写历史纪录最高成绩
+        ```
+        getBestScore() {
+            return this.storage.getItem(this.bestScoreKey) || 0;
+        }
+
+        setBestScore(score) {
+            this.storage.setItem(this.bestScoreKey, score);
+        }
+        ```
+        - 若未成功读取则置零
+
+    3. `getGameState()`/`setGameState(gameState)` ： 读/写游戏状态
+        ```
+        getGameState() {
+            var stateJSON = this.storage.getItem(this.gameStateKey);
+            return stateJSON ? JSON.parse(stateJSON) : null;
+        }
+        
+        setGameState(gameState) {
+            this.storage.setItem(this.gameStateKey, JSON.stringify(gameState));
+        }
+        ```
+        - 以Json字符串保存/读取游戏状态，实现读档功能
+        - `JSON.parse`解析JSON字符串，`JSON.stringify`将对象序列化为JSON字符串
+
+    4. `clearGameState()` ： 清除已保存的游戏状态
+        ```
+        clearGameState() {
+            this.storage.removeItem(this.gameStateKey);
+        }
+        ```
+        
