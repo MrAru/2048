@@ -426,8 +426,319 @@ if (!window.cancelAnimationFrame) {
     - 调用`this.listen()`开始监听输入
 
 2. 对象方法
-    1. `` ： 
+    1. `on(event, callback)` ： 绑定事件与回调函数
         ```
-        
+        on(event, callback) {
+            if (!this.events[event]) {
+                this.events[event] = [];
+            }
+            this.events[event].push(callback);
+        }
         ```
-        - 
+        - 将多个回调函数放在同一个事件下对应的数组中
+
+    2. `emit(event, data)` ： 
+        ```
+        emit(event, data) {
+            var callbacks = this.events[event];
+            if (callbacks) {
+                callbacks.forEach(function (callback) {
+                    callback(data);
+                });
+            }
+        }
+        ```
+        - 通过`this.events[event]`获取该事件对应的回调函数并逐个对`data`执行
+
+    3. `listen()` ： 监听事件响应函数
+        ```
+        listen() {
+            var self = this;
+            var map = {
+                38: 0,
+                39: 1,
+                40: 2,
+                37: 3,
+                75: 0,
+                76: 1,
+                74: 2,
+                72: 3,
+                87: 0,
+                68: 1,
+                83: 2,
+                65: 3
+            };
+            document.addEventListener("keydown", function (event) {
+                var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+                var mapped = map[event.which];
+                if (!modifiers) {
+                    if (mapped !== undefined) {
+                        event.preventDefault();
+                        self.emit("move", mapped);
+                    }
+                }
+                if (!modifiers && event.which === 82) {
+                    self.restart.call(self, event);
+                }
+            });
+            this.bindButtonPress(".retry-button", this.restart);
+            this.bindButtonPress(".restart-button", this.restart);
+            this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+            var touchStartClientX, touchStartClientY;
+            var gameContainer = document.getElementsByClassName("game-container")[0];
+            gameContainer.addEventListener(this.eventTouchstart, function (event) {
+                if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
+                event.targetTouches.length > 1) {
+                    return;
+                }
+                if (window.navigator.msPointerEnabled) {
+                    touchStartClientX = event.pageX;
+                    touchStartClientY = event.pageY;
+                }
+                else {
+                    touchStartClientX = event.touches[0].clientX;
+                    touchStartClientY = event.touches[0].clientY;
+                }
+                event.preventDefault();
+            });
+            gameContainer.addEventListener(this.eventTouchmove, function (event) {
+                event.preventDefault();
+            });
+            gameContainer.addEventListener(this.eventTouchend, function (event) {
+                if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
+                event.targetTouches.length > 0) {
+                    return;
+                }
+                var touchEndClientX, touchEndClientY;
+                if (window.navigator.msPointerEnabled) {
+                    touchEndClientX = event.pageX;
+                    touchEndClientY = event.pageY;
+                }
+                else {
+                    touchEndClientX = event.changedTouches[0].clientX;
+                    touchEndClientY = event.changedTouches[0].clientY;
+                }
+                var dx = touchEndClientX - touchStartClientX;
+                var absDx = Math.abs(dx);
+                var dy = touchEndClientY - touchStartClientY;
+                var absDy = Math.abs(dy);
+                if (Math.max(absDx, absDy) > 10) {
+                    self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+                }
+            });
+        }
+        ```
+        - 定义键位与方向的映射关系，当捕获到输入时，若输入无控制符且输入键有定义则调用`self.emit()`按`mapped`中的方向映射执行移动；特别地如果输入为`r`则调用`self.restart.call()`重新开始游戏
+        - 通过`this.bindButtonPress()`方法将HTML页面上显示的三个功能按钮与对应事件绑定
+        - 在移动端监听手指滑动，当手指存在滑动且只检测到一根手指的移动时按照一个简单的算法处理X，Y轴的移动数据，最后得出方向，再调用`self.emit()`触发游戏的移动驱动更新
+
+    4. `restart(event)` ： 重新开始游戏
+        ```
+        restart(event) {
+            event.preventDefault();
+            this.emit("restart");
+        }
+        ```
+        - 通过`event.preventDefault()`当前与事件关联的默认动作，再通过`this.emit()`重新开始游戏
+
+    5. `keepPlaying(event)` ： 达到2048分后继续玩
+        ```
+        keepPlaying(event) {
+            event.preventDefault();
+            this.emit("keepPlaying");
+        }
+        ```
+        - 通过`event.preventDefault()`当前与事件关联的默认动作，再通过`this.emit()`调用与`keepPlaying()`相关的事件
+
+    6. `bindButtonPress(selector, fn)` ： 将某事件绑定到按钮点击事件上
+        ```
+        bindButtonPress(selector, fn) {
+            var button = document.querySelector(selector);
+            button.addEventListener("click", fn.bind(this));
+            button.addEventListener(this.eventTouchend, fn.bind(this));
+        }
+        ```
+        - 通过 HTML DOM 选择出需要绑定的按钮
+        - 为该按钮点击事件添加监听
+        - 为移动端点击添加监听
+
+---
+
+### `/js/html_actuator.js` : 处理HTML页面显示与交互
+定义HTMLActuator类
+1. 构造函数
+    ```
+    constructor() {
+    this.tileContainer = document.querySelector(".tile-container");
+    this.scoreContainer = document.querySelector(".score-container");
+    this.bestContainer = document.querySelector(".best-container");
+    this.messageContainer = document.querySelector(".game-message");
+    this.score = 0;
+    }
+    ```
+    - 获取参与显示的 HTML 元素的 DOM 对象
+    - 初始化得分为 0
+
+2. 对象方法
+    1. `actuate(grid, metadata)` ： 界面绘制驱动程序
+        ```
+        actuate(grid, metadata) {
+            var self = this;
+            window.requestAnimationFrame(function () {
+                self.clearContainer(self.tileContainer);
+                grid.cells.forEach(function (column) {
+                    column.forEach(function (cell) {
+                        if (cell) {
+                            self.addTile(cell);
+                        }
+                    });
+                });
+                self.updateScore(metadata.score);
+                self.updateBestScore(metadata.bestScore);
+                if (metadata.terminated) {
+                    if (metadata.over) {
+                        self.message(false);
+                    }
+                    else if (metadata.won) {
+                        self.message(true);
+                    }
+                }
+            });
+        }
+        ```
+        - 首先向浏览器请求绘制一帧动画，调用`self.clearContainer()`清除所有的方块；再遍历所有的方格，若当前方格存在方块则`self.addTile()`绘制
+        - 调用`self.updateScore()`和`self.updateBestScore()`来绘制变化的最高得分和得分变化的动画
+        - 最后检测该玩家是否已经胜利或失败，若是则绘制相应动画
+
+    2. `continueGame()` ： 清除在胜利/失败后显示的动画让玩家继续游戏
+        ```
+        continueGame() {
+            this.clearMessage();
+        }
+        ```
+
+    3. `clearContainer(container)` ： 清除当前方格上的方块
+        ```
+        clearContainer(container) {
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+        }
+        ```
+        - 调用 DOM 对象的`removeChild()`方法来移除方格上的方块
+
+    4. `addTile(tile)` ： 为方块渲染数字
+        ```
+        addTile(tile) {
+            var self = this;
+            var wrapper = document.createElement("div");
+            var inner = document.createElement("div");
+            var position = tile.previousPosition || { x: tile.x, y: tile.y };
+            var positionClass = this.positionClass(position);
+            var classes = ["tile", "tile-" + tile.value, positionClass];
+            if (tile.value > 2048)
+            classes.push("tile-super");
+            this.applyClasses(wrapper, classes);
+            inner.classList.add("tile-inner");
+            inner.textContent = tile.value;
+            if (tile.previousPosition) {
+                window.requestAnimationFrame(function () {
+                    classes[2] = self.positionClass({ x: tile.x, y: tile.y });
+                    self.applyClasses(wrapper, classes);
+                });
+            }
+            else if (tile.mergedFrom) {
+                classes.push("tile-merged");
+                this.applyClasses(wrapper, classes);
+                tile.mergedFrom.forEach(function (merged) {
+                    self.addTile(merged);
+                });
+            }
+            else {
+                classes.push("tile-new");
+                this.applyClasses(wrapper, classes);
+            }
+            wrapper.appendChild(inner);
+            this.tileContainer.appendChild(wrapper);
+        }
+        ```
+        - 首先创建两个空`<div>`元素，父级用来绘制方块，子级用来显示数字
+        - 获取当前处理的方块的位置坐标，将坐标格式化为字符串用来处理父级`<div>`的`class`属性
+        - 若当前处理的方块数值大于2048则创建的父级`<div>`属性用默认添加的`class='tile-super'`，否则使用与当前方块的数值坐标有关的属性字符串
+        - 子级`<div>`元素属性为默认添加`class='tile-inner'`，值为当前处理的方块数值
+        - 如果`tile.previousPosition`属性存在，即当前方块非新出现方块，则调用动画帧绘制移动动画
+        - 若当前方块存在`tile.mergedFrom`属性，即当前方块是合并后的新方块，则对合并的两个方块分别递归调用`addTile()`来绘制合并动画
+        - 若以上两种都不是则为新产生的方块，默认添加`class='tile-new'`，对其绘制产生动画
+        - 调用`this.tileContainer.appendChild()`对当前方块绘制数字
+
+    5. `applyClasses(element, classes)` ： 对指定 HTML DOM 元素应用样式
+        ```
+        applyClasses(element, classes) {
+            element.setAttribute("class", classes.join(" "));
+        }
+        ```
+        - 调用`join()`把数值合并为一个字符串
+
+    6. `normalizePosition(position)` ： 返回格式化的坐标
+        ```
+        normalizePosition(position) {
+            return { x: position.x + 1, y: position.y + 1 };
+        }
+        ```
+        - 坐标X，Y值均加一保证数组处理时从1开始
+
+    7. `positionClass(position)` ： 返回包含有坐标信息的字符串用来创建`class`属性
+        ```
+        positionClass(position) {
+            position = this.normalizePosition(position);
+            return "tile-position-" + position.x + "-" + position.y;
+        }
+        ```
+
+    8. `updateScore(score)` ： 当前分数更新动画驱动函数
+        ```
+        updateScore(score) {
+            this.clearContainer(this.scoreContainer);
+            var difference = score - this.score;
+            this.score = score;
+            this.scoreContainer.textContent = this.score;
+            if (difference > 0) {
+                var addition = document.createElement("div");
+                addition.classList.add("score-addition");
+                addition.textContent = "+" + difference;
+                this.scoreContainer.appendChild(addition);
+            }
+        }
+        ```
+        - 首先`this.clearContainer()`清除当前分数，计算本次移动得分
+        - 改变`this.scoreContainer.textContent`属性的值来更改分数显示
+        - 若本次移动得分不为零则绘制分数改变的动画
+
+    9. `updateBestScore(bestScore)` ： 改变最高纪录动画驱动函数
+        ```
+        updateBestScore(bestScore) {
+            this.bestContainer.textContent = bestScore;
+        }
+        ```
+        - 改变`this.bestContainer.textContent`属性的值来绘制动画
+
+    10. `message(won)` ： 游戏状态改变
+        ```
+        message(won) {
+            var type = won ? "game-won" : "game-over";
+            var message = won ? "You win!" : "Game over!";
+            this.messageContainer.classList.add(type);
+            this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+        }
+        ```
+        - 对赢得游戏和游戏失败分别作出响应动画
+
+    11. `clearMessage()` ： 清除游戏状态改变时的动画
+        ```
+        clearMessage() {
+            this.messageContainer.classList.remove("game-won");
+            this.messageContainer.classList.remove("game-over");
+        }
+        ```
+
+---
