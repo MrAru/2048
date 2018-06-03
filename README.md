@@ -1169,3 +1169,9 @@ if (!window.cancelAnimationFrame) {
 游戏中所有的动画效果交由`css`完成，`JavaScript`只负责游戏的逻辑控制和与用户的交互。代码控制方块的移动合并事件部分的算法思想非常具有参考价值。
 
 我个人作为一个后端而言，在阅读这个工程后受益匪浅。以前虽然对`JavaScript`有过基础的了解但是一些具体的细节理解的不是很清楚。通过这个工程让我对`JavaScript`的继承和原型链、内存管理以及`JavaScript`语言本身的并发模型有了更深的了解和认识。
+
+---
+
+## License
+
+This project is licensed under the [MIT license](https://github.com/Mraru/2048/blob/master/LICENSE).
