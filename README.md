@@ -11,7 +11,7 @@
 
 ### 文件结构
 
-![](D:\Documents\Programming\Canvas\捕获.PNG)
+![](.\src\tree.png)
 
 ---
 
