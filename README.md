@@ -1,13 +1,19 @@
-# README
-## 特性
-  + 原生JavaScript (ECMAScript 2015)
-  + 支持储存，读档，自动载入，记录最高得分
-  + 移动端友好
-  + 仿原应用的CSS
+# 2048 In JavaScript
+
+## 概述
+本游戏名为2048，在一个正方形棋盘上会随机生成带有数字的方块，数字相同的两个方块可以合并为一个数值更大的方块。玩家通过上下左右方向键来控制整个盘面上方块的移动与合并方向，最终目标为出现一个数值大于等于2048的方块。若所有方格被填满且无法继续移动方块的时候则游戏结束。
 
 ---
 
 ## 实现
+
+游戏基于Github开源代码[2048](https://github.com/gabrielecirulli/2048)修改而成，主要是在[ECMAScript2015](https://www.ecma-international.org/ecma-262/6.0/)规范下改写了整个代码
+
+### 文件结构
+
+![](D:\Documents\Programming\Canvas\捕获.PNG)
+
+---
 
 ### 定义
 - 方格(Grid)：指在网页背景上显示的，由HTML tag所定义的预留空间
@@ -26,7 +32,8 @@ window.requestAnimationFrame(function () {
     new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
 });
 ```
-在`index.html`中最后加载此文件，目的是使浏览器加载全部JS文件之后再开始渲染避免一些奇怪的bug。
+- 通过调用GameManager构造函数，来定义一个实例对象，并且输入四个参数
+- 在`index.html`中最后加载此文件，目的是使浏览器加载全部JS文件之后再开始渲染避免一些奇怪的bug
 
 ---
 
@@ -254,6 +261,7 @@ window.requestAnimationFrame(function () {
         - 通过`this.getVector()`获取移动的方向和距离，通过`this.buildTraversals()`获取遍历方格坐标的数组
         - 对`traversals`中的每个坐标，先通过`this.grid.cellContent()`来判断该方格上是否存在方块；若存在，通过`this.findFarthestPosition()`来寻找在该方向上该方块(`tile`，下同)能移动的最大距离和第一个遇见或出界的方块(`next`，下同)。
         - 当且仅当`next`存在(未出界)，`tile`与`next`数值相等，`next`在此次坐标更新中未移动过这三个条件同时成立时，在`next`对应的坐标上新建一个数值为`2 * tile.value`的方块并储存此次移动信息；将这次合并所获得的分数加在总分数上，若此时总分等于2048则令`this.won`值为`True`
+        - 具体的合并行为为，先生成新的`tile`，保存信息，然后删除当前两个`tile`
         - 若不满足上述三个条件之一，则只需调用`this.moveTile()`方法将当前方块移至其在当前方向上最远所能到达的位置
         - 调用`this.positionsEqual()`方法来检查上述步骤是否出错，若无误则在一个可用位置随机生成一个新的方块；此时调用`this.movesAvailable()`检查是否可以继续移动，若不能继续则游戏结束
 
@@ -271,7 +279,7 @@ window.requestAnimationFrame(function () {
         ```
         - 返回输入`direction`所对应的方向向量
 
-    13. `buildTraversals(vector)` ： 返回一个方格坐标遍历数组
+    13. `buildTraversals(vector)` ： 构建一个以正确的顺序遍历的位置列表
         ```
         buildTraversals(vector) {
             var traversals = { x: [], y: [] };
@@ -305,6 +313,7 @@ window.requestAnimationFrame(function () {
         ```
         - 从当前位置开始，每次沿着指定方向迭代前进后检查当前方格是否可用(`this.grid.cellAvailable()`)以及是否出界(`this.grid.withinBounds()`)
         - 返回界内最远可用方格的位置以及第一个不可用或出界位置
+        - `next`值用于储存需要检查是否需要合并的位置
 
     15. `movesAvailable()` ： 检查是否存在可移动方块
         ```
@@ -314,7 +323,7 @@ window.requestAnimationFrame(function () {
         ```
         - 当存在可用方格(可生成新的方块)或存在可合并方块时返回`True`，否则返回`False`
 
-    16. `tileMatchesAvailable()` ： 检查是否存在可合并方块
+    16. `tileMatchesAvailable()` ： 检查可用的匹配之间的数值
         ```
         tileMatchesAvailable() {
             var self = this;
@@ -338,6 +347,7 @@ window.requestAnimationFrame(function () {
         }
         ```
         - 对于每个方格，如果其上存在方块，则以其坐标为原点对每个方向都检查在此方向上第一个遇见的方块其数值是否与当前方块一致
+        - 若返回`true`则可以合并
 
     17. `positionsEqual(first, second)` ： 检查`first`与`second`坐标是否一致
         ```
@@ -365,6 +375,110 @@ Function.prototype.bind = Function.prototype.bind || function (target) {
 ---
 
 ### `/js/classlist_polyfill.js` : 初始化与操作 HTML DOM 相关的设置
+
+```
+var prototype = Array.prototype,
+    push = prototype.push,
+    splice = prototype.splice,
+    join = prototype.join;
+```
+通过改写`prototype`的定义，将`push``splice``join`定义为数组
+
+定义`DOMTokenList`类
+1. 构造函数
+    ```
+    constructor(el) {
+          this.el = el;
+          var classes = el.className.replace(/^\s+|\s+$/g, '').split(/\s+/);
+          for (var i = 0; i < classes.length; i++) {
+            push.call(this, classes[i]);
+          }
+        }
+    ```
+    - 通过正则表达式获取当前 HTML 文件中的所有 DOM 节点元素
+
+2. 覆写`DOMTokenList`的原型方法 : `DOMTokenList.prototype`
+
+    1. `add` ： 将节点元素加入数组来构造节点元素列表
+        ```
+        add: function (token) {
+          if (this.contains(token)) return;
+          push.call(this, token);
+          this.el.className = this.toString();
+        }
+        ```
+        - 若当前节点元素已经存在于数组则返回；若不存在则将其加入数组
+
+    2. `contains` ： 判断一个节点元素是否已经存在与数组中
+        ```
+        contains: function (token) {
+          return this.el.className.indexOf(token) != -1;
+        }
+        ```
+        - 直接通过查找此元素在数组中的下标，判断其是否为-1（意味着不存在）
+
+    3. `item` ： 返回`index`下标对应的元素
+        ```
+        item: function (index) {
+            return this[index] || null;
+            }
+        ```
+
+    4. `remove` ： 从数组中删除元素
+        ```
+        remove: function (token) {
+          if (!this.contains(token)) return;
+          for (var i = 0; i < this.length; i++) {
+            if (this[i] == token) break;
+          }
+          splice.call(this, i, 1);
+          this.el.className = this.toString();
+        }
+        ```
+        - 如果数组中不存在该元素则返回
+        - 如果存在则从第一个元素开始查找直至找到第一个该元素所在位置，`add`方法保证了在数组中每个元素只会出现一次，则调用`splice`函数将其删除
+
+    5. `toString` ： 将数组每个元素直接添加空格后转为字符串
+        ```
+        toString: function () {
+          return join.call(this, ' ');
+        }
+        ```
+
+    6. `toggle` ： 切换元素在数组中的存在性
+        ```
+        toggle: function (token) {
+          if (!this.contains(token)) {
+            this.add(token);
+          } else {
+            this.remove(token);
+          }
+          return this.contains(token);
+        }
+        ```
+        - 如果不存在该元素则通过`add`加入，如果存在则`remove`删除
+
+覆写系统预定义对象并定义对象方法
+1. 改写浏览器预定义对象
+    ```
+    window.DOMTokenList = DOMTokenList
+    ```
+    将`window.DOMTokenList`定义为`DOMTokenList`的实例
+
+2. 定义对象的`Get`方法
+    ```
+    function defineElementGetter(obj, prop, getter) {
+        if (Object.defineProperty) {
+          Object.defineProperty(obj, prop, {
+            get: getter
+          });
+        } else {
+          obj.__defineGetter__(prop, getter);
+        }
+      }
+    ```
+
+---
 
 ### `/js/animframe_polyfill.js` : 处理在不同浏览器上与更新动画相关的设置
 ```
@@ -531,6 +645,8 @@ if (!window.cancelAnimationFrame) {
         - 定义键位与方向的映射关系，当捕获到输入时，若输入无控制符且输入键有定义则调用`self.emit()`按`mapped`中的方向映射执行移动；特别地如果输入为`r`则调用`self.restart.call()`重新开始游戏
         - 通过`this.bindButtonPress()`方法将HTML页面上显示的三个功能按钮与对应事件绑定
         - 在移动端监听手指滑动，当手指存在滑动且只检测到一根手指的移动时按照一个简单的算法处理X，Y轴的移动数据，最后得出方向，再调用`self.emit()`触发游戏的移动驱动更新
+        - 对上下左右，`W``A``S``D`以及`Vim`中的`H``J``K``L`都映射了相关事件
+        - 在移动端只对`game-container`进行监听，意味着只有在`game-container`中滑动有效
 
     4. `restart(event)` ： 重新开始游戏
         ```
@@ -564,7 +680,7 @@ if (!window.cancelAnimationFrame) {
 
 ---
 
-### `/js/html_actuator.js` : 处理HTML页面显示与交互
+### `/js/html_actuator.js` : 处理 DOM 交互操作与绘图
 定义HTMLActuator类
 1. 构造函数
     ```
@@ -576,7 +692,7 @@ if (!window.cancelAnimationFrame) {
     this.score = 0;
     }
     ```
-    - 获取参与显示的 HTML 元素的 DOM 对象
+    - 获取参与显示的 HTML 元素的 DOM 节点对象
     - 初始化得分为 0
 
 2. 对象方法
@@ -606,6 +722,7 @@ if (!window.cancelAnimationFrame) {
             });
         }
         ```
+        - `var self = this`使用中间变量固定`this`的确切指向，确定执行的作用域，防止函数内部多层`this`导致指向不明
         - 首先向浏览器请求绘制一帧动画，调用`self.clearContainer()`清除所有的方块；再遍历所有的方格，若当前方格存在方块则`self.addTile()`绘制
         - 调用`self.updateScore()`和`self.updateBestScore()`来绘制变化的最高得分和得分变化的动画
         - 最后检测该玩家是否已经胜利或失败，若是则绘制相应动画
@@ -671,7 +788,7 @@ if (!window.cancelAnimationFrame) {
         - 若以上两种都不是则为新产生的方块，默认添加`class='tile-new'`，对其绘制产生动画
         - 调用`this.tileContainer.appendChild()`对当前方块绘制数字
 
-    5. `applyClasses(element, classes)` ： 对指定 HTML DOM 元素应用样式
+    5. `applyClasses(element, classes)` ： 对指定元素应用应用css样式
         ```
         applyClasses(element, classes) {
             element.setAttribute("class", classes.join(" "));
@@ -687,7 +804,7 @@ if (!window.cancelAnimationFrame) {
         ```
         - 坐标X，Y值均加一保证数组处理时从1开始
 
-    7. `positionClass(position)` ： 返回包含有坐标信息的字符串用来创建`class`属性
+    7. `positionClass(position)` ： 利用位置确定css样式
         ```
         positionClass(position) {
             position = this.normalizePosition(position);
@@ -973,7 +1090,7 @@ if (!window.cancelAnimationFrame) {
         }
     };
     ```
-    - 一个替代方法，利用列表解析来在`window.localStorage`不被支持的情况下储存游戏
+    - 一个替代方法，利用JSON解析来在`window.localStorage`不被支持的情况下储存游戏
     - 分别实现了读、写、删除与清空功能
 
 定义LocalStorageManager类
@@ -1007,7 +1124,7 @@ if (!window.cancelAnimationFrame) {
             }
         }
         ```
-        - 用`try...catch`尝试通过`window.localStorage`方法储存，若报错则改用`window.fakeStorage`
+        - 用`try...catch`测试`window.localStorage`方法储存，若报错则改用`window.fakeStorage`
     
     2. `getBestScore()`/`setBestScore(score)` ： 读/写历史纪录最高成绩
         ```
@@ -1041,4 +1158,14 @@ if (!window.cancelAnimationFrame) {
             this.storage.removeItem(this.gameStateKey);
         }
         ```
-        
+---  
+
+## 总结
+
+整个工程淋漓尽致地体现了OOP的思想，将每部分都独立定义为一个类并为每个事件都写了一个方法。这样做的好处在于定义好逻辑及其接口后写游戏的主逻辑时极为方便且便于后期维护和测试，但由于对方法划分过于细致，经常出现调用一个方法需要层层垂直向下调用到大量的方法（而实际上本可以将其全部写在一个方法）。
+
+代码充分运用了`JavaScript`中对象的`prototype`属性来改变其继承原型的属性和方法，这极大地减少了代码量。由于`JavaScript`中对当前对象的调用经常会出现`this`指代不明的情况，因此通过定义中间变量来明确方法执行的作用域。
+
+游戏中所有的动画效果交由`css`完成，`JavaScript`只负责游戏的逻辑控制和与用户的交互。代码控制方块的移动合并事件部分的算法思想非常具有参考价值。
+
+我个人作为一个后端而言，在阅读这个工程后受益匪浅。以前虽然对`JavaScript`有过基础的了解但是一些具体的细节理解的不是很清楚。通过这个工程让我对`JavaScript`的继承和原型链、内存管理以及`JavaScript`语言本身的并发模型有了更深的了解和认识。
