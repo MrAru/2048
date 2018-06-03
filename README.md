@@ -11,7 +11,7 @@
 
 ### 文件结构
 
-![](.\src\tree.png)
+![](./src/tree.png)
 
 ---
 
