@@ -7,7 +7,7 @@
 
 ## 实现
 
-游戏基于Github开源代码[2048](https://github.com/gabrielecirulli/2048)修改而成，主要是在[ECMAScript2015](https://www.ecma-international.org/ecma-262/6.0/)规范下改写了整个代码
+游戏基于开源代码[2048](https://github.com/gabrielecirulli/2048)修改而成，主要是在[ECMAScript2015](https://www.ecma-international.org/ecma-262/6.0/)规范下改写了整个代码
 
 ### 文件结构
 
@@ -17,7 +17,7 @@
 
 ### 定义
 - 方格(Grid)：指在网页背景上显示的，由HTML tag所定义的预留空间
-- 方块(Tile)：指叠放在方格上的真正可操纵对象
+- 方块(Tile)：指叠放在方格上的带有数字的真正可操纵对象
 
 ---
 
@@ -382,7 +382,7 @@ var prototype = Array.prototype,
     splice = prototype.splice,
     join = prototype.join;
 ```
-通过改写`prototype`的定义，将`push``splice``join`定义为数组
+通过改写`prototype`的定义，将`push` `splice` `join`定义为数组
 
 定义`DOMTokenList`类
 1. 构造函数
@@ -645,7 +645,7 @@ if (!window.cancelAnimationFrame) {
         - 定义键位与方向的映射关系，当捕获到输入时，若输入无控制符且输入键有定义则调用`self.emit()`按`mapped`中的方向映射执行移动；特别地如果输入为`r`则调用`self.restart.call()`重新开始游戏
         - 通过`this.bindButtonPress()`方法将HTML页面上显示的三个功能按钮与对应事件绑定
         - 在移动端监听手指滑动，当手指存在滑动且只检测到一根手指的移动时按照一个简单的算法处理X，Y轴的移动数据，最后得出方向，再调用`self.emit()`触发游戏的移动驱动更新
-        - 对上下左右，`W``A``S``D`以及`Vim`中的`H``J``K``L`都映射了相关事件
+        - 对上下左右，`W` `A` `S` `D`以及`Vim`中的`H` `J` `K` `L`都映射了相关事件
         - 在移动端只对`game-container`进行监听，意味着只有在`game-container`中滑动有效
 
     4. `restart(event)` ： 重新开始游戏
@@ -1069,29 +1069,29 @@ if (!window.cancelAnimationFrame) {
 
 ### `/js/local_storage_manager.js` : 处理本地储存
 本地读写设置
-    ```
-    window.fakeStorage = {
-        _data: {},
-        
-        setItem: function (id, val) {
-            return this._data[id] = String(val);
-        },
-        
-        getItem: function (id) {
-            return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
-        },
-        
-        removeItem: function (id) {
-            return delete this._data[id];
-        },
-        
-        clear: function () {
-            return this._data = {};
-        }
-    };
-    ```
-    - 一个替代方法，利用JSON解析来在`window.localStorage`不被支持的情况下储存游戏
-    - 分别实现了读、写、删除与清空功能
+```
+window.fakeStorage = {
+    _data: {},
+    
+    setItem: function (id, val) {
+        return this._data[id] = String(val);
+    },
+    
+    getItem: function (id) {
+        return this._data.hasOwnProperty(id) ? this._data[id]: undefined;
+    },
+    
+    removeItem: function (id) {
+        return delete this._data[id];
+    },
+    
+    clear: function () {
+        return this._data = {};
+    }
+};
+```
+- 一个替代方法，利用JSON解析来在`window.localStorage`不被支持的况下储存游戏
+- 分别实现了读、写、删除与清空功能
 
 定义LocalStorageManager类
 
@@ -1109,7 +1109,7 @@ if (!window.cancelAnimationFrame) {
 
 
 2. 对象方法
-    1. `localStorageSupported()` ： 
+    1. `localStorageSupported()` ： 测试当前浏览器是否支持`window.localStorage`对象
         ```
         localStorageSupported() {
             var testKey = "test";
@@ -1124,7 +1124,7 @@ if (!window.cancelAnimationFrame) {
             }
         }
         ```
-        - 用`try...catch`测试`window.localStorage`方法储存，若报错则改用`window.fakeStorage`
+        - 用`try...catch`测试`window.localStorage`对象储存，若报错则改用`window.fakeStorage`
     
     2. `getBestScore()`/`setBestScore(score)` ： 读/写历史纪录最高成绩
         ```
@@ -1162,11 +1162,11 @@ if (!window.cancelAnimationFrame) {
 
 ## 总结
 
-整个工程淋漓尽致地体现了OOP的思想，将每部分都独立定义为一个类并为每个事件都写了一个方法。这样做的好处在于定义好逻辑及其接口后写游戏的主逻辑时极为方便且便于后期维护和测试，但由于对方法划分过于细致，经常出现调用一个方法需要层层垂直向下调用到大量的方法（而实际上本可以将其全部写在一个方法）。
+整个工程淋漓尽致地体现了OOP的思想，将每部分都独立定义为一个类并为每个事件都写了一个方法。这样做的好处在于定义好逻辑及其接口后写游戏的主逻辑时极为方便且便于后期维护和测试，但由于对方法划分过于细致，经常出现调用一个方法需要层层垂直向下调用到大量的方法（而实际上本可以将其全部写在一个方法内）。
 
 代码充分运用了`JavaScript`中对象的`prototype`属性来改变其继承原型的属性和方法，这极大地减少了代码量。由于`JavaScript`中对当前对象的调用经常会出现`this`指代不明的情况，因此通过定义中间变量来明确方法执行的作用域。
 
-游戏中所有的动画效果交由`css`完成，`JavaScript`只负责游戏的逻辑控制和与用户的交互。代码控制方块的移动合并事件部分的算法思想非常具有参考价值。
+游戏中所有的动画效果交由`css`完成，`JavaScript`只负责游戏的逻辑控制和与用户的交互。控制方块的移动合并事件部分的算法思想非常具有参考价值。
 
 我个人作为一个后端而言，在阅读这个工程后受益匪浅。以前虽然对`JavaScript`有过基础的了解但是一些具体的细节理解的不是很清楚。通过这个工程让我对`JavaScript`的继承和原型链、内存管理以及`JavaScript`语言本身的并发模型有了更深的了解和认识。
 
