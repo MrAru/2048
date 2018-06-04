@@ -1,32 +1,55 @@
-# 2048 In JavaScript
+<!-- TOC -->
 
-## 概述
+- [1. In JavaScript](#1-in-javascript)
+    - [1.1. 概述](#11-概述)
+    - [1.2. 实现](#12-实现)
+        - [1.2.1. 文件结构](#121-文件结构)
+        - [1.2.2. 定义](#122-定义)
+        - [1.2.3. `index.html`](#123-indexhtml)
+        - [1.2.4. `/js/application.js` : 初始化渲染](#124-jsapplicationjs--初始化渲染)
+        - [1.2.5. `/js/game_manager.js` : 游戏主事件驱动](#125-jsgame_managerjs--游戏主事件驱动)
+        - [1.2.6. `/js/bind.js` : 改写绑定事件](#126-jsbindjs--改写绑定事件)
+        - [1.2.7. `/js/classlist.js` : 初始化与操作 HTML DOM 相关的设置](#127-jsclasslistjs--初始化与操作-html-dom-相关的设置)
+        - [1.2.8. `/js/animframe.js` : 处理在不同浏览器上与更新动画相关的设置](#128-jsanimframejs--处理在不同浏览器上与更新动画相关的设置)
+        - [1.2.9. `/js/keyboard_input_manager.js` : 处理输入事件](#129-jskeyboard_input_managerjs--处理输入事件)
+        - [1.2.10. `/js/html_actuator.js` : 处理 DOM 交互操作与绘图](#1210-jshtml_actuatorjs--处理-dom-交互操作与绘图)
+        - [1.2.11. `/js/grid.js` : 方格类](#1211-jsgridjs--方格类)
+        - [1.2.12. `/js/tile.js` : 方块类](#1212-jstilejs--方块类)
+        - [1.2.13. `/js/local_storage_manager.js` : 处理本地储存](#1213-jslocal_storage_managerjs--处理本地储存)
+    - [1.3. 总结](#13-总结)
+    - [1.4. License](#14-license)
+
+<!-- /TOC -->
+
+# 1. In JavaScript
+
+## 1.1. 概述
 本游戏名为2048，在一个正方形棋盘上会随机生成带有数字的方块，数字相同的两个方块可以合并为一个数值更大的方块。玩家通过上下左右方向键来控制整个盘面上方块的移动与合并方向，最终目标为出现一个数值大于等于2048的方块。若所有方格被填满且无法继续移动方块的时候则游戏结束。
 
 ---
 
-## 实现
+## 1.2. 实现
 
 游戏基于开源代码[2048](https://github.com/gabrielecirulli/2048)修改而成，主要是在[ECMAScript2015](https://www.ecma-international.org/ecma-262/6.0/)规范下改写了整个代码
 
-### 文件结构
+### 1.2.1. 文件结构
 
 ![](./src/tree.png)
 
 ---
 
-### 定义
+### 1.2.2. 定义
 - 方格(Grid)：指在网页背景上显示的，由HTML tag所定义的预留空间
 - 方块(Tile)：指叠放在方格上的带有数字的真正可操纵对象
 
 ---
 
-### `index.html`
+### 1.2.3. `index.html`
 构造 4 x 4 `<div>`方格作为背景并统一`class='grid-cell'`,预留一个`class='tile-container'`的`<div>`标签用来在背景方格上描绘方块。
 
 ---
 
-### `/js/application.js` : 初始化渲染
+### 1.2.4. `/js/application.js` : 初始化渲染
 ```
 window.requestAnimationFrame(function () {
     new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
@@ -37,7 +60,7 @@ window.requestAnimationFrame(function () {
 
 ---
 
-### `/js/game_manager.js` : 游戏主事件驱动
+### 1.2.5. `/js/game_manager.js` : 游戏主事件驱动
 定义GameManager类
 1. 构造函数
 	```
@@ -358,7 +381,7 @@ window.requestAnimationFrame(function () {
 
 ---
 
-### `/js/bind_polyfill.js` : 改写绑定事件
+### 1.2.6. `/js/bind.js` : 改写绑定事件
 ```
 Function.prototype.bind = Function.prototype.bind || function (target) {
   var self = this;
@@ -374,7 +397,7 @@ Function.prototype.bind = Function.prototype.bind || function (target) {
 
 ---
 
-### `/js/classlist_polyfill.js` : 初始化与操作 HTML DOM 相关的设置
+### 1.2.7. `/js/classlist.js` : 初始化与操作 HTML DOM 相关的设置
 
 ```
 var prototype = Array.prototype,
@@ -480,7 +503,7 @@ var prototype = Array.prototype,
 
 ---
 
-### `/js/animframe_polyfill.js` : 处理在不同浏览器上与更新动画相关的设置
+### 1.2.8. `/js/animframe.js` : 处理在不同浏览器上与更新动画相关的设置
 ```
 var lastTime = 0;
   var vendors = ['webkit', 'moz'];
@@ -516,7 +539,7 @@ if (!window.cancelAnimationFrame) {
 
 ---
 
-### `/js/keyboard_input_manager.js` : 处理输入事件
+### 1.2.9. `/js/keyboard_input_manager.js` : 处理输入事件
 定义`KeyboardInputManager`类
 1. 构造函数
     ```
@@ -680,7 +703,7 @@ if (!window.cancelAnimationFrame) {
 
 ---
 
-### `/js/html_actuator.js` : 处理 DOM 交互操作与绘图
+### 1.2.10. `/js/html_actuator.js` : 处理 DOM 交互操作与绘图
 定义HTMLActuator类
 1. 构造函数
     ```
@@ -860,7 +883,7 @@ if (!window.cancelAnimationFrame) {
 
 ---
 
-### `/js/grid.js` : 方格类
+### 1.2.11. `/js/grid.js` : 方格类
 定义Grid类
 1. 构造函数
     ```
@@ -1019,7 +1042,7 @@ if (!window.cancelAnimationFrame) {
 
 ---
 
-### `/js/tile.js` : 方块类
+### 1.2.12. `/js/tile.js` : 方块类
 定义Tile类
 1. 构造函数
     ```
@@ -1067,7 +1090,7 @@ if (!window.cancelAnimationFrame) {
 
 ---
 
-### `/js/local_storage_manager.js` : 处理本地储存
+### 1.2.13. `/js/local_storage_manager.js` : 处理本地储存
 本地读写设置
 ```
 window.fakeStorage = {
@@ -1160,7 +1183,7 @@ window.fakeStorage = {
         ```
 ---  
 
-## 总结
+## 1.3. 总结
 
 整个工程淋漓尽致地体现了OOP的思想，将每部分都独立定义为一个类并为每个事件都写了一个方法。这样做的好处在于定义好逻辑及其接口后写游戏的主逻辑时极为方便且便于后期维护和测试，但由于对方法划分过于细致，经常出现调用一个方法需要层层垂直向下调用到大量的方法（而实际上本可以将其全部写在一个方法内）。
 
@@ -1172,6 +1195,6 @@ window.fakeStorage = {
 
 ---
 
-## License
+## 1.4. License
 
 This project is licensed under the [MIT license](https://github.com/Mraru/2048/blob/master/LICENSE).
