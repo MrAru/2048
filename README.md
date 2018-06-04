@@ -55,13 +55,13 @@ window.requestAnimationFrame(function () {
     new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
 });
 ```
-- 通过调用GameManager构造函数，来定义一个实例对象，并且输入四个参数
+- 初始化一个`GameManager`的实例并输入四个参数
 - 在`index.html`中最后加载此文件，目的是使浏览器加载全部JS文件之后再开始渲染避免一些奇怪的bug
 
 ---
 
 ### 1.2.5. `/js/game_manager.js` : 游戏主事件驱动
-定义GameManager类
+定义`GameManager`类
 1. 构造函数
 	```
     constructor(size, InputManager, Actuator, StorageManager) {
