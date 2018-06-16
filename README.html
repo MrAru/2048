@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>README</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\Mraru\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#1-2048-in-javascript">1. 2048 In JavaScript</a>
+<ul>
+<li><a href="#11-%E6%A6%82%E8%BF%B0">1.1. 概述</a></li>
+<li><a href="#12-%E5%AE%9E%E7%8E%B0">1.2. 实现</a>
+<ul>
+<li><a href="#121-%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84">1.2.1. 文件结构</a></li>
+<li><a href="#122-%E5%AE%9A%E4%B9%89">1.2.2. 定义</a></li>
+<li><a href="#123-indexhtml">1.2.3. <code>index.html</code></a></li>
+<li><a href="#124-jsapplicationjs--%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B8%B2%E6%9F%93">1.2.4. <code>/js/application.js</code> : 初始化渲染</a></li>
+<li><a href="#125-jsgame_managerjs--%E6%B8%B8%E6%88%8F%E4%B8%BB%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8">1.2.5. <code>/js/game_manager.js</code> : 游戏主事件驱动</a></li>
+<li><a href="#126-jsbindjs--%E6%94%B9%E5%86%99%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6">1.2.6. <code>/js/bind.js</code> : 改写绑定事件</a></li>
+<li><a href="#127-jsclasslistjs--%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E6%93%8D%E4%BD%9C-html-dom-%E7%9B%B8%E5%85%B3%E7%9A%84%E8%AE%BE%E7%BD%AE">1.2.7. <code>/js/classlist.js</code> : 初始化与操作 HTML DOM 相关的设置</a></li>
+<li><a href="#128-jsanimframejs--%E5%A4%84%E7%90%86%E5%9C%A8%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8A%E4%B8%8E%E6%9B%B4%E6%96%B0%E5%8A%A8%E7%94%BB%E7%9B%B8%E5%85%B3%E7%9A%84%E8%AE%BE%E7%BD%AE">1.2.8. <code>/js/animframe.js</code> : 处理在不同浏览器上与更新动画相关的设置</a></li>
+<li><a href="#129-jskeyboard_input_managerjs--%E5%A4%84%E7%90%86%E8%BE%93%E5%85%A5%E4%BA%8B%E4%BB%B6">1.2.9. <code>/js/keyboard_input_manager.js</code> : 处理输入事件</a></li>
+<li><a href="#1210-jshtml_actuatorjs--%E5%A4%84%E7%90%86-dom-%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C%E4%B8%8E%E7%BB%98%E5%9B%BE">1.2.10. <code>/js/html_actuator.js</code> : 处理 DOM 交互操作与绘图</a></li>
+<li><a href="#1211-jsgridjs--%E6%96%B9%E6%A0%BC%E7%B1%BB">1.2.11. <code>/js/grid.js</code> : 方格类</a></li>
+<li><a href="#1212-jstilejs--%E6%96%B9%E5%9D%97%E7%B1%BB">1.2.12. <code>/js/tile.js</code> : 方块类</a></li>
+<li><a href="#1213-jslocal_storage_managerjs--%E5%A4%84%E7%90%86%E6%9C%AC%E5%9C%B0%E5%82%A8%E5%AD%98">1.2.13. <code>/js/local_storage_manager.js</code> : 处理本地储存</a></li>
+</ul>
+</li>
+<li><a href="#13-%E6%80%BB%E7%BB%93">1.3. 总结</a></li>
+<li><a href="#14-license">1.4. License</a></li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="1-2048-in-javascript">1. 2048 In JavaScript</h1>
+
+<h2 class="mume-header" id="11-%E6%A6%82%E8%BF%B0">1.1. 概述</h2>
+
+<p>本游戏名为2048，在一个正方形棋盘上会随机生成带有数字的方块，数字相同的两个方块可以合并为一个数值更大的方块。玩家通过上下左右方向键来控制整个盘面上方块的移动与合并方向，最终目标为出现一个数值大于等于2048的方块。若所有方格被填满且无法继续移动方块的时候则游戏结束。同时游戏提供了纪录最高分以及纪录当前盘面状态的功能，可以在下一次开启时自动载入上次盘面，在游戏过程中也支持按<code>r</code>键随时重新开局。</p>
+<hr>
+<h2 class="mume-header" id="12-%E5%AE%9E%E7%8E%B0">1.2. 实现</h2>
+
+<p>游戏基于开源代码<a href="https://github.com/gabrielecirulli/2048">2048</a>修改而成，主要是在<a href="https://www.ecma-international.org/ecma-262/6.0/">ECMAScript2015</a>规范下改写了整个代码</p>
+<h3 class="mume-header" id="121-%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84">1.2.1. 文件结构</h3>
+
+<p><img src="https://raw.githubusercontent.com/Mraru/2048/master/src/tree.png" alt=""></p>
+<hr>
+<h3 class="mume-header" id="122-%E5%AE%9A%E4%B9%89">1.2.2. 定义</h3>
+
+<ul>
+<li>方格(Grid)：指在网页背景上显示的，由HTML tag所定义的预留空间</li>
+<li>方块(Tile)：指叠放在方格上的带有数字的真正可操纵对象</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="123-indexhtml">1.2.3. <code>index.html</code></h3>
+
+<p>构造 4 x 4 <code>&lt;div&gt;</code>方格作为背景并统一<code>class='grid-cell'</code>,预留一个<code>class='tile-container'</code>的<code>&lt;div&gt;</code>标签用来在背景方格上描绘方块。</p>
+<hr>
+<h3 class="mume-header" id="124-jsapplicationjs-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B8%B2%E6%9F%93">1.2.4. <code>/js/application.js</code> : 初始化渲染</h3>
+
+<pre data-role="codeBlock" data-info="" class="language-"><code>window.requestAnimationFrame(function () {
+    new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
+});
+</code></pre><ul>
+<li>初始化一个<code>GameManager</code>的实例并输入四个参数</li>
+<li>在<code>index.html</code>中最后加载此文件，目的是使浏览器加载全部JS文件之后再开始渲染避免一些奇怪的bug</li>
+</ul>
+<hr>
+<h3 class="mume-header" id="125-jsgame_managerjs-%E6%B8%B8%E6%88%8F%E4%B8%BB%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8">1.2.5. <code>/js/game_manager.js</code> : 游戏主事件驱动</h3>
+
+<p>定义<code>GameManager</code>类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor(size, InputManager, Actuator, StorageManager) {
+    this.size = size;
+    this.inputManager = new InputManager;
+    this.storageManager = new StorageManager;
+    this.actuator = new Actuator;
+    this.startTiles = 2;
+    this.inputManager.on(&quot;move&quot;, this.move.bind(this));
+    this.inputManager.on(&quot;restart&quot;, this.restart.bind(this));
+    this.inputManager.on(&quot;keepPlaying&quot;, this.keepPlaying.bind(this));
+    this.setup();
+}
+</code></pre><ul>
+<li><code>size</code>控制背景方格边长（即 <code>size x size</code> ）</li>
+<li><code>InputManager</code>为<code>KeyboardInputManager</code>类的实例，按栈模型处理输入事件</li>
+<li><code>Actuator</code>为<code>HTMLActuator</code>类的实例，用来处理与HTML DOM交互有关的事件</li>
+<li><code>StorageManager</code>为<code>LocalStorageManager</code>类的实例，用来处理本地数据的读取和保存</li>
+<li><code>startTiles</code>设置初始方块数量，默认为2</li>
+<li><code>inputManager.on()</code>绑定事件与对应的方法，在<code>KeyboardInputManager</code>中按栈模型处理</li>
+<li>通过<code>setup()</code>方法初始化游戏</li>
+</ul>
+</li>
+<li>
+<p>对象方法</p>
+<ol>
+<li>
+<p><code>setup()</code> ： 初始化游戏</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>setup() {
+    var previousState = this.storageManager.getGameState();
+    if (previousState) {
+        this.grid = new Grid(previousState.grid.size, previousState.grid.cells);
+        this.score = previousState.score;
+        this.over = previousState.over;
+        this.won = previousState.won;
+        this.keepPlaying = previousState.keepPlaying;
+    }
+    else {
+        this.grid = new Grid(this.size);
+        this.score = 0;
+        this.over = false;
+        this.won = false;
+        this.keepPlaying = false;
+        this.addStartTiles();
+    }
+    this.actuate();
+}
+</code></pre><ul>
+<li>如果存在上次游戏未结束退出则通过<code>this.storageManager.getGameState()</code>自动读取上次的存档</li>
+<li>若是新游戏则创建<code>size x size</code>的方格并初始化各类参数，更新第一次<code>actuate()</code></li>
+</ul>
+</li>
+<li>
+<p><code>restart()</code> ： 重启游戏并清除当前状态的储存</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>restart() {
+    this.storageManager.clearGameState();
+    this.actuator.continueGame();
+    this.setup();
+}
+</code></pre><ul>
+<li>调用<code>this.storageManager.clearGameState()</code>清除当前游戏状态的储存</li>
+<li>调用<code>this.actuator.continueGame()</code>清除当前可能在HTML中显示的输/赢弹窗</li>
+<li>调用<code>this.setup()</code>新建游戏</li>
+</ul>
+</li>
+<li>
+<p><code>keepPlaying()</code> ： 允许玩家在得分超过2048后继续游戏</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>keepPlaying() {
+    this.keepPlaying = true;
+    this.actuator.continueGame();
+}
+</code></pre><ul>
+<li>将<code>this.keepPlaying</code>的值修改为<code>Ture</code></li>
+<li>调用<code>this.actuator.continueGame()</code>清除当前在HTML中显示的游戏胜利弹窗</li>
+</ul>
+</li>
+<li>
+<p><code>isGameTerminated()</code> : 当用户失败或赢得游戏或不继续玩则返回<code>True</code></p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>isGameTerminated() {
+    return this.over || (this.won &amp;&amp; !this.keepPlaying);
+}
+</code></pre><ul>
+<li><code>this.over</code>指示是否失败</li>
+<li><code>this.won</code>指示是否胜利</li>
+<li><code>this.keepPlaying</code>指示用户是否继续玩</li>
+</ul>
+</li>
+<li>
+<p><code>addStartTiles()</code> : 创造最初始方块</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>addStartTiles() {
+    for (var i = 0; i &lt; this.startTiles; i++) {
+        this.addRandomTile();
+    }
+}
+</code></pre><ul>
+<li><code>this.startTiles</code>在构造函数中定义，指示最初方块的个数</li>
+<li><code>this.addRandomTile()</code>为初始的每个方块分配随机的数值</li>
+</ul>
+</li>
+<li>
+<p><code>addRandomTile()</code> : 为初始方块分配随机数值</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>addRandomTile() {
+    if (this.grid.cellsAvailable()) {
+        var value = Math.random() &lt; 0.9 ? 2 : 4;
+        var tile = new Tile(this.grid.randomAvailableCell(), value);
+        this.grid.insertTile(tile);
+    }
+}
+</code></pre><ul>
+<li><code>this.gird.cellsAvailable()</code>指示当前方块是否可访问</li>
+<li><code>Math.random() &lt; 0.9 ? 2 : 4</code>按照 9 : 1 的比例随机分配初始值为 2 和 4</li>
+<li><code>new Tile(this.grid.randomAvailableCell(), value)</code>在随机一个并未被使用的区域新建一个值为<code>value</code>的方块</li>
+<li><code>this.gird.insertTile(tile)</code>把该方块放入其所在背景方格</li>
+</ul>
+</li>
+<li>
+<p><code>actuate()</code> : 主驱动程序</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>actuate() {
+    if (this.storageManager.getBestScore() &lt; this.score) {
+        this.storageManager.setBestScore(this.score);
+    }
+    if (this.over) {
+        this.storageManager.clearGameState();
+    }
+    else {
+        this.storageManager.setGameState(this.serialize());
+    }
+    this.actuator.actuate(this.grid, {
+        score: this.score,
+        over: this.over,
+        won: this.won,
+        bestScore: this.storageManager.getBestScore(),
+        terminated: this.isGameTerminated()
+        }
+    );
+}
+</code></pre><ul>
+<li><code>this.storageManager.getBestScore()</code>为历史最高得分，将其与<code>this.score</code>当前得分比较来更新历史记录</li>
+<li>通过判断<code>this.over</code>决定游戏是否继续，若继续则通过<code>this.storageManager.setGameState()</code>储存当前局面状态</li>
+<li><code>this.serialize()</code>返回序列化的当前每个方格的状态</li>
+<li>最后调用<code>this.actuator.actuate()</code>将当前状态通过HTML DOM绘制</li>
+</ul>
+</li>
+<li>
+<p><code>serialize()</code> : 将当前每个方格的状态作为对象返回</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>serialize() {
+    return {
+        grid: this.grid.serialize(),
+        score: this.score,
+        over: this.over,
+        won: this.won,
+        keepPlaying: this.keepPlaying
+    };
+}
+</code></pre></li>
+<li>
+<p><code>prepareTiles()</code> : 储存所有方块的位置并重置合并信息</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>prepareTiles() {
+    this.grid.eachCell(function (x, y, tile) {
+        if (tile) {
+            tile.mergedFrom = null;
+            tile.savePosition();
+        }
+    });
+}
+</code></pre><ul>
+<li>调用<code>this.grid.eachCell()</code>对每个方格执行函数，该函数检查当前方格上是否存在方块，若存在则储存其位置并将其合并源位置清空</li>
+</ul>
+</li>
+<li>
+<p><code>moveTile(tile, cell)</code> : 将一个方块移动到另一个方格上</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>moveTile(tile, cell) {
+    this.grid.cells[tile.x][tile.y] = null;
+    this.grid.cells[cell.x][cell.y] = tile;
+    tile.updatePosition(cell);
+}
+</code></pre><ul>
+<li>接受参数<code>tile</code>为欲移动的方块，<code>cell</code>为移动目的方格</li>
+<li>把坐标为<code>(tile.x, tile.y)</code>的方格设为无方块</li>
+<li>把坐标为<code>(cell.x, cell.y)</code>的方格设为存在方块<code>tile</code></li>
+<li>调用<code>tile.updatePosition()</code>方法更新方块内部储存的坐标信息</li>
+</ul>
+</li>
+<li>
+<p><code>move(direction)</code> : 方块移动合并事件驱动函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>move(direction) {
+    var self = this;
+    if (this.isGameTerminated())
+    return;
+    var cell, tile;
+    var vector = this.getVector(direction);
+    var traversals = this.buildTraversals(vector);
+    var moved = false;
+    this.prepareTiles();
+    traversals.x.forEach(function (x) {
+        traversals.y.forEach(function (y) {
+            cell = { x: x, y: y };
+            tile = self.grid.cellContent(cell);
+            if (tile) {
+                var positions = self.findFarthestPosition(cell, vector);
+                var next = self.grid.cellContent(positions.next);
+                if (next &amp;&amp; next.value === tile.value &amp;&amp; !next.mergedFrom) {
+                    var merged = new Tile(positions.next, tile.value * 2);
+                    merged.mergedFrom = [tile, next];
+                    self.grid.insertTile(merged);
+                    self.grid.removeTile(tile);
+                    tile.updatePosition(positions.next);
+                    self.score += merged.value;
+                    if (merged.value === 2048)
+                    self.won = true;
+                }
+                else {
+                    self.moveTile(tile, positions.farthest);
+                }
+                if (!self.positionsEqual(cell, tile)) {
+                    moved = true;
+                }
+            }
+        });
+    });
+    if (moved) {
+        this.addRandomTile();
+        if (!this.movesAvailable()) {
+            this.over = true;
+        }
+        this.actuate();
+    }
+}
+</code></pre><ul>
+<li>首先判断<code>this.isGameTerminated()</code>，若为<code>True</code>则直接退出</li>
+<li>通过<code>this.getVector()</code>获取移动的方向和距离，通过<code>this.buildTraversals()</code>获取遍历方格坐标的数组</li>
+<li>对<code>traversals</code>中的每个坐标，先通过<code>this.grid.cellContent()</code>来判断该方格上是否存在方块；若存在，通过<code>this.findFarthestPosition()</code>来寻找在该方向上该方块(<code>tile</code>，下同)能移动的最大距离和第一个遇见或出界的方块(<code>next</code>，下同)。</li>
+<li>当且仅当<code>next</code>存在(未出界)，<code>tile</code>与<code>next</code>数值相等，<code>next</code>在此次坐标更新中未移动过这三个条件同时成立时，在<code>next</code>对应的坐标上新建一个数值为<code>2 * tile.value</code>的方块并储存此次移动信息；将这次合并所获得的分数加在总分数上，若此时总分等于2048则令<code>this.won</code>值为<code>True</code></li>
+<li>具体的合并行为为，先生成新的<code>tile</code>，保存信息，然后删除当前两个<code>tile</code></li>
+<li>若不满足上述三个条件之一，则只需调用<code>this.moveTile()</code>方法将当前方块移至其在当前方向上最远所能到达的位置</li>
+<li>调用<code>this.positionsEqual()</code>方法来检查上述步骤是否出错，若无误则在一个可用位置随机生成一个新的方块；此时调用<code>this.movesAvailable()</code>检查是否可以继续移动，若不能继续则游戏结束</li>
+</ul>
+</li>
+<li>
+<p><code>getVector(direction)</code> : 将用户输入转换为方向向量</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>getVector(direction) {
+    var map = {
+        0: { x: 0, y: -1 }, // Up
+        1: { x: 1, y: 0 }, //Right
+        2: { x: 0, y: 1 }, //Down
+        3: { x: -1, y: 0 } // Left
+    };
+    return map[direction];
+}
+</code></pre><ul>
+<li>返回输入<code>direction</code>所对应的方向向量</li>
+</ul>
+</li>
+<li>
+<p><code>buildTraversals(vector)</code> ： 构建一个以正确的顺序遍历的位置列表</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>buildTraversals(vector) {
+    var traversals = { x: [], y: [] };
+    for (var pos = 0; pos &lt; this.size; pos++) {
+        traversals.x.push(pos);
+        traversals.y.push(pos);
+    }
+    if (vector.x === 1)
+        traversals.x = traversals.x.reverse();
+    if (vector.y === 1)
+        traversals.y = traversals.y.reverse();
+    return traversals;
+}
+</code></pre><ul>
+<li>对每个方格将其位置信息保存在<code>traversals</code>内</li>
+<li>最后两个<code>if</code>语句确保此遍历数组永远是从移动方向的最远端开始遍历</li>
+</ul>
+</li>
+<li>
+<p><code>findFarthestPosition(cell, vector)</code> ： 返回指定坐标在指定方向的最远可用位置</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>findFarthestPosition(cell, vector) {
+    var previous;
+    do {
+        previous = cell;
+        cell = { x: previous.x + vector.x, y: previous.y + vector.y };
+    } while (this.grid.withinBounds(cell) &amp;&amp; this.grid.cellAvailable(cell));
+    return {
+        farthest: previous,
+        next: cell
+    };
+}
+</code></pre><ul>
+<li>从当前位置开始，每次沿着指定方向迭代前进后检查当前方格是否可用(<code>this.grid.cellAvailable()</code>)以及是否出界(<code>this.grid.withinBounds()</code>)</li>
+<li>返回界内最远可用方格的位置以及第一个不可用或出界位置</li>
+<li><code>next</code>值用于储存需要检查是否需要合并的位置</li>
+</ul>
+</li>
+<li>
+<p><code>movesAvailable()</code> ： 检查是否存在可移动方块</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>movesAvailable() {
+    return this.grid.cellsAvailable() || this.tileMatchesAvailable();
+}
+</code></pre><ul>
+<li>当存在可用方格(可生成新的方块)或存在可合并方块时返回<code>True</code>，否则返回<code>False</code></li>
+</ul>
+</li>
+<li>
+<p><code>tileMatchesAvailable()</code> ： 检查可用的匹配之间的数值</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>tileMatchesAvailable() {
+    var self = this;
+    var tile;
+    for (var x = 0; x &lt; this.size; x++) {
+        for (var y = 0; y &lt; this.size; y++) {
+            tile = this.grid.cellContent({ x: x, y: y });
+            if (tile) {
+                for (var direction = 0; direction &lt; 4; direction++) {
+                    var vector = self.getVector(direction);
+                    var cell = { x: x + vector.x, y: y + vector.y };
+                    var other = self.grid.cellContent(cell);
+                    if (other &amp;&amp; other.value === tile.value) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+</code></pre><ul>
+<li>对于每个方格，如果其上存在方块，则以其坐标为原点对每个方向都检查在此方向上第一个遇见的方块其数值是否与当前方块一致</li>
+<li>若返回<code>true</code>则可以合并</li>
+</ul>
+</li>
+<li>
+<p><code>positionsEqual(first, second)</code> ： 检查<code>first</code>与<code>second</code>坐标是否一致</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>positionsEqual(first, second) {
+    return first.x === second.x &amp;&amp; first.y === second.y;
+}
+</code></pre></li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 class="mume-header" id="126-jsbindjs-%E6%94%B9%E5%86%99%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6">1.2.6. <code>/js/bind.js</code> : 改写绑定事件</h3>
+
+<pre data-role="codeBlock" data-info="" class="language-"><code>Function.prototype.bind = Function.prototype.bind || function (target) {
+  var self = this;
+  return function (args) {
+    if (!(args instanceof Array)) {
+      args = [args];
+    }
+    self.apply(target, args);
+  };
+};
+</code></pre><p>对于存在绑定事件的函数对象不改变其原有事件；对于不存在绑定事件的函数对象，将其默认绑定至一个预定义函数上，该函数将调用时的<code>this</code>替换为<code>target</code>，同时把<code>args</code>数组作为参数传递给<code>this</code>对象。通过此函数使得所有的函数对象都通过<code>apply()</code>接受一个数组作为输入参数。</p>
+<hr>
+<h3 class="mume-header" id="127-jsclasslistjs-%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E6%93%8D%E4%BD%9C-html-dom-%E7%9B%B8%E5%85%B3%E7%9A%84%E8%AE%BE%E7%BD%AE">1.2.7. <code>/js/classlist.js</code> : 初始化与操作 HTML DOM 相关的设置</h3>
+
+<pre data-role="codeBlock" data-info="" class="language-"><code>var prototype = Array.prototype,
+    push = prototype.push,
+    splice = prototype.splice,
+    join = prototype.join;
+</code></pre><p>通过改写<code>prototype</code>的定义，将<code>push</code> <code>splice</code> <code>join</code>定义为数组</p>
+<p>定义<code>DOMTokenList</code>类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor(el) {
+      this.el = el;
+      var classes = el.className.replace(/^\s+|\s+$/g, &apos;&apos;).split(/\s+/);
+      for (var i = 0; i &lt; classes.length; i++) {
+        push.call(this, classes[i]);
+      }
+    }
+</code></pre><ul>
+<li>通过正则表达式获取当前 HTML 文件中的所有 DOM 节点元素</li>
+</ul>
+</li>
+<li>
+<p>覆写<code>DOMTokenList</code>的原型方法 : <code>DOMTokenList.prototype</code></p>
+<ol>
+<li>
+<p><code>add</code> ： 将节点元素加入数组来构造节点元素列表</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>add: function (token) {
+  if (this.contains(token)) return;
+  push.call(this, token);
+  this.el.className = this.toString();
+}
+</code></pre><ul>
+<li>若当前节点元素已经存在于数组则返回；若不存在则将其加入数组</li>
+</ul>
+</li>
+<li>
+<p><code>contains</code> ： 判断一个节点元素是否已经存在与数组中</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>contains: function (token) {
+  return this.el.className.indexOf(token) != -1;
+}
+</code></pre><ul>
+<li>直接通过查找此元素在数组中的下标，判断其是否为-1（意味着不存在）</li>
+</ul>
+</li>
+<li>
+<p><code>item</code> ： 返回<code>index</code>下标对应的元素</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>item: function (index) {
+    return this[index] || null;
+    }
+</code></pre></li>
+<li>
+<p><code>remove</code> ： 从数组中删除元素</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>remove: function (token) {
+  if (!this.contains(token)) return;
+  for (var i = 0; i &lt; this.length; i++) {
+    if (this[i] == token) break;
+  }
+  splice.call(this, i, 1);
+  this.el.className = this.toString();
+}
+</code></pre><ul>
+<li>如果数组中不存在该元素则返回</li>
+<li>如果存在则从第一个元素开始查找直至找到第一个该元素所在位置，<code>add</code>方法保证了在数组中每个元素只会出现一次，则调用<code>splice</code>函数将其删除</li>
+</ul>
+</li>
+<li>
+<p><code>toString</code> ： 将数组每个元素直接添加空格后转为字符串</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>toString: function () {
+  return join.call(this, &apos; &apos;);
+}
+</code></pre></li>
+<li>
+<p><code>toggle</code> ： 切换元素在数组中的存在性</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>toggle: function (token) {
+  if (!this.contains(token)) {
+    this.add(token);
+  } else {
+    this.remove(token);
+  }
+  return this.contains(token);
+}
+</code></pre><ul>
+<li>如果不存在该元素则通过<code>add</code>加入，如果存在则<code>remove</code>删除</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<p>覆写系统预定义对象并定义对象方法</p>
+<ol>
+<li>
+<p>改写浏览器预定义对象</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>window.DOMTokenList = DOMTokenList
+</code></pre><p>将<code>window.DOMTokenList</code>定义为<code>DOMTokenList</code>的实例</p>
+</li>
+<li>
+<p>定义对象的<code>Get</code>方法</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>function defineElementGetter(obj, prop, getter) {
+    if (Object.defineProperty) {
+      Object.defineProperty(obj, prop, {
+        get: getter
+      });
+    } else {
+      obj.__defineGetter__(prop, getter);
+    }
+  }
+</code></pre></li>
+</ol>
+<hr>
+<h3 class="mume-header" id="128-jsanimframejs-%E5%A4%84%E7%90%86%E5%9C%A8%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8A%E4%B8%8E%E6%9B%B4%E6%96%B0%E5%8A%A8%E7%94%BB%E7%9B%B8%E5%85%B3%E7%9A%84%E8%AE%BE%E7%BD%AE">1.2.8. <code>/js/animframe.js</code> : 处理在不同浏览器上与更新动画相关的设置</h3>
+
+<pre data-role="codeBlock" data-info="" class="language-"><code>var lastTime = 0;
+  var vendors = [&apos;webkit&apos;, &apos;moz&apos;];
+  for (var x = 0; x &lt; vendors.length &amp;&amp; !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + &apos;RequestAnimationFrame&apos;];
+    window.cancelAnimationFrame = window[vendors[x] + &apos;CancelAnimationFrame&apos;] ||
+      window[vendors[x] + &apos;CancelRequestAnimationFrame&apos;];
+  }
+</code></pre><p>对不同浏览器分别重写调用动画和回调动画函数并绑定给函数对象。</p>
+<p>若上述预设值均不被当前浏览器接受，则手动重写该函数。<code>id</code>是回调列表中唯一的标识，可以传这个值给<code>window.cancelAnimationFrame()</code>以取消回调函数。</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function () {
+        callback(currTime + timeToCall);
+      },
+      timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+      clearTimeout(id);
+    };
+  }
+</code></pre><hr>
+<h3 class="mume-header" id="129-jskeyboard_input_managerjs-%E5%A4%84%E7%90%86%E8%BE%93%E5%85%A5%E4%BA%8B%E4%BB%B6">1.2.9. <code>/js/keyboard_input_manager.js</code> : 处理输入事件</h3>
+
+<p>定义<code>KeyboardInputManager</code>类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor() {
+    this.events = {};
+    if (window.navigator.msPointerEnabled) {
+        this.eventTouchstart = &quot;MSPointerDown&quot;;
+        this.eventTouchmove = &quot;MSPointerMove&quot;;
+        this.eventTouchend = &quot;MSPointerUp&quot;;
+    }
+    else {
+        this.eventTouchstart = &quot;touchstart&quot;;
+        this.eventTouchmove = &quot;touchmove&quot;;
+        this.eventTouchend = &quot;touchend&quot;;
+    }
+    this.listen();
+}
+</code></pre><ul>
+<li><code>this.events</code>为事件数组，按栈模型处理</li>
+<li>定义移动端访问手指滑动事件参数；通过<code>window.navigator.msPointerEnabled</code>判断如果浏览器为<code>IE</code>系列，则定义略有不同</li>
+<li>调用<code>this.listen()</code>开始监听输入</li>
+</ul>
+</li>
+<li>
+<p>对象方法</p>
+<ol>
+<li>
+<p><code>on(event, callback)</code> ： 绑定事件与回调函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>on(event, callback) {
+    if (!this.events[event]) {
+        this.events[event] = [];
+    }
+    this.events[event].push(callback);
+}
+</code></pre><ul>
+<li>将多个回调函数放在同一个事件下对应的数组中</li>
+</ul>
+</li>
+<li>
+<p><code>emit(event, data)</code> ：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>emit(event, data) {
+    var callbacks = this.events[event];
+    if (callbacks) {
+        callbacks.forEach(function (callback) {
+            callback(data);
+        });
+    }
+}
+</code></pre><ul>
+<li>通过<code>this.events[event]</code>获取该事件对应的回调函数并逐个对<code>data</code>执行</li>
+</ul>
+</li>
+<li>
+<p><code>listen()</code> ： 监听事件响应函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>listen() {
+    var self = this;
+    var map = {
+        38: 0,
+        39: 1,
+        40: 2,
+        37: 3,
+        75: 0,
+        76: 1,
+        74: 2,
+        72: 3,
+        87: 0,
+        68: 1,
+        83: 2,
+        65: 3
+    };
+    document.addEventListener(&quot;keydown&quot;, function (event) {
+        var modifiers = event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+        var mapped = map[event.which];
+        if (!modifiers) {
+            if (mapped !== undefined) {
+                event.preventDefault();
+                self.emit(&quot;move&quot;, mapped);
+            }
+        }
+        if (!modifiers &amp;&amp; event.which === 82) {
+            self.restart.call(self, event);
+        }
+    });
+    this.bindButtonPress(&quot;.retry-button&quot;, this.restart);
+    this.bindButtonPress(&quot;.restart-button&quot;, this.restart);
+    this.bindButtonPress(&quot;.keep-playing-button&quot;, this.keepPlaying);
+    var touchStartClientX, touchStartClientY;
+    var gameContainer = document.getElementsByClassName(&quot;game-container&quot;)[0];
+    gameContainer.addEventListener(this.eventTouchstart, function (event) {
+        if ((!window.navigator.msPointerEnabled &amp;&amp; event.touches.length &gt; 1) ||
+        event.targetTouches.length &gt; 1) {
+            return;
+        }
+        if (window.navigator.msPointerEnabled) {
+            touchStartClientX = event.pageX;
+            touchStartClientY = event.pageY;
+        }
+        else {
+            touchStartClientX = event.touches[0].clientX;
+            touchStartClientY = event.touches[0].clientY;
+        }
+        event.preventDefault();
+    });
+    gameContainer.addEventListener(this.eventTouchmove, function (event) {
+        event.preventDefault();
+    });
+    gameContainer.addEventListener(this.eventTouchend, function (event) {
+        if ((!window.navigator.msPointerEnabled &amp;&amp; event.touches.length &gt; 0) ||
+        event.targetTouches.length &gt; 0) {
+            return;
+        }
+        var touchEndClientX, touchEndClientY;
+        if (window.navigator.msPointerEnabled) {
+            touchEndClientX = event.pageX;
+            touchEndClientY = event.pageY;
+        }
+        else {
+            touchEndClientX = event.changedTouches[0].clientX;
+            touchEndClientY = event.changedTouches[0].clientY;
+        }
+        var dx = touchEndClientX - touchStartClientX;
+        var absDx = Math.abs(dx);
+        var dy = touchEndClientY - touchStartClientY;
+        var absDy = Math.abs(dy);
+        if (Math.max(absDx, absDy) &gt; 10) {
+            self.emit(&quot;move&quot;, absDx &gt; absDy ? (dx &gt; 0 ? 1 : 3) : (dy &gt; 0 ? 2 : 0));
+        }
+    });
+}
+</code></pre><ul>
+<li>定义键位与方向的映射关系，当捕获到输入时，若输入无控制符且输入键有定义则调用<code>self.emit()</code>按<code>mapped</code>中的方向映射执行移动；特别地如果输入为<code>r</code>则调用<code>self.restart.call()</code>重新开始游戏</li>
+<li>通过<code>this.bindButtonPress()</code>方法将HTML页面上显示的三个功能按钮与对应事件绑定</li>
+<li>在移动端监听手指滑动，当手指存在滑动且只检测到一根手指的移动时按照一个简单的算法处理X，Y轴的移动数据，最后得出方向，再调用<code>self.emit()</code>触发游戏的移动驱动更新</li>
+<li>对上下左右，<code>W</code> <code>A</code> <code>S</code> <code>D</code>以及<code>Vim</code>中的<code>H</code> <code>J</code> <code>K</code> <code>L</code>都映射了相关事件</li>
+<li>在移动端只对<code>game-container</code>进行监听，意味着只有在<code>game-container</code>中滑动有效</li>
+</ul>
+</li>
+<li>
+<p><code>restart(event)</code> ： 重新开始游戏</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>restart(event) {
+    event.preventDefault();
+    this.emit(&quot;restart&quot;);
+}
+</code></pre><ul>
+<li>通过<code>event.preventDefault()</code>当前与事件关联的默认动作，再通过<code>this.emit()</code>重新开始游戏</li>
+</ul>
+</li>
+<li>
+<p><code>keepPlaying(event)</code> ： 达到2048分后继续玩</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>keepPlaying(event) {
+    event.preventDefault();
+    this.emit(&quot;keepPlaying&quot;);
+}
+</code></pre><ul>
+<li>通过<code>event.preventDefault()</code>当前与事件关联的默认动作，再通过<code>this.emit()</code>调用与<code>keepPlaying()</code>相关的事件</li>
+</ul>
+</li>
+<li>
+<p><code>bindButtonPress(selector, fn)</code> ： 将某事件绑定到按钮点击事件上</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>bindButtonPress(selector, fn) {
+    var button = document.querySelector(selector);
+    button.addEventListener(&quot;click&quot;, fn.bind(this));
+    button.addEventListener(this.eventTouchend, fn.bind(this));
+}
+</code></pre><ul>
+<li>通过 HTML DOM 选择出需要绑定的按钮</li>
+<li>为该按钮点击事件添加监听</li>
+<li>为移动端点击添加监听</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 class="mume-header" id="1210-jshtml_actuatorjs-%E5%A4%84%E7%90%86-dom-%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C%E4%B8%8E%E7%BB%98%E5%9B%BE">1.2.10. <code>/js/html_actuator.js</code> : 处理 DOM 交互操作与绘图</h3>
+
+<p>定义HTMLActuator类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor() {
+this.tileContainer = document.querySelector(&quot;.tile-container&quot;);
+this.scoreContainer = document.querySelector(&quot;.score-container&quot;);
+this.bestContainer = document.querySelector(&quot;.best-container&quot;);
+this.messageContainer = document.querySelector(&quot;.game-message&quot;);
+this.score = 0;
+}
+</code></pre><ul>
+<li>获取参与显示的 HTML 元素的 DOM 节点对象</li>
+<li>初始化得分为 0</li>
+</ul>
+</li>
+<li>
+<p>对象方法</p>
+<ol>
+<li>
+<p><code>actuate(grid, metadata)</code> ： 界面绘制驱动程序</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>actuate(grid, metadata) {
+    var self = this;
+    window.requestAnimationFrame(function () {
+        self.clearContainer(self.tileContainer);
+        grid.cells.forEach(function (column) {
+            column.forEach(function (cell) {
+                if (cell) {
+                    self.addTile(cell);
+                }
+            });
+        });
+        self.updateScore(metadata.score);
+        self.updateBestScore(metadata.bestScore);
+        if (metadata.terminated) {
+            if (metadata.over) {
+                self.message(false);
+            }
+            else if (metadata.won) {
+                self.message(true);
+            }
+        }
+    });
+}
+</code></pre><ul>
+<li><code>var self = this</code>使用中间变量固定<code>this</code>的确切指向，确定执行的作用域，防止函数内部多层<code>this</code>导致指向不明</li>
+<li>首先向浏览器请求绘制一帧动画，调用<code>self.clearContainer()</code>清除所有的方块；再遍历所有的方格，若当前方格存在方块则<code>self.addTile()</code>绘制</li>
+<li>调用<code>self.updateScore()</code>和<code>self.updateBestScore()</code>来绘制变化的最高得分和得分变化的动画</li>
+<li>最后检测该玩家是否已经胜利或失败，若是则绘制相应动画</li>
+</ul>
+</li>
+<li>
+<p><code>continueGame()</code> ： 清除在胜利/失败后显示的动画让玩家继续游戏</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>continueGame() {
+    this.clearMessage();
+}
+</code></pre></li>
+<li>
+<p><code>clearContainer(container)</code> ： 清除当前方格上的方块</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>clearContainer(container) {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+}
+</code></pre><ul>
+<li>调用 DOM 对象的<code>removeChild()</code>方法来移除方格上的方块</li>
+</ul>
+</li>
+<li>
+<p><code>addTile(tile)</code> ： 为方块渲染数字</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>addTile(tile) {
+    var self = this;
+    var wrapper = document.createElement(&quot;div&quot;);
+    var inner = document.createElement(&quot;div&quot;);
+    var position = tile.previousPosition || { x: tile.x, y: tile.y };
+    var positionClass = this.positionClass(position);
+    var classes = [&quot;tile&quot;, &quot;tile-&quot; + tile.value, positionClass];
+    if (tile.value &gt; 2048)
+    classes.push(&quot;tile-super&quot;);
+    this.applyClasses(wrapper, classes);
+    inner.classList.add(&quot;tile-inner&quot;);
+    inner.textContent = tile.value;
+    if (tile.previousPosition) {
+        window.requestAnimationFrame(function () {
+            classes[2] = self.positionClass({ x: tile.x, y: tile.y });
+            self.applyClasses(wrapper, classes);
+        });
+    }
+    else if (tile.mergedFrom) {
+        classes.push(&quot;tile-merged&quot;);
+        this.applyClasses(wrapper, classes);
+        tile.mergedFrom.forEach(function (merged) {
+            self.addTile(merged);
+        });
+    }
+    else {
+        classes.push(&quot;tile-new&quot;);
+        this.applyClasses(wrapper, classes);
+    }
+    wrapper.appendChild(inner);
+    this.tileContainer.appendChild(wrapper);
+}
+</code></pre><ul>
+<li>首先创建两个空<code>&lt;div&gt;</code>元素，父级用来绘制方块，子级用来显示数字</li>
+<li>获取当前处理的方块的位置坐标，将坐标格式化为字符串用来处理父级<code>&lt;div&gt;</code>的<code>class</code>属性</li>
+<li>若当前处理的方块数值大于2048则创建的父级<code>&lt;div&gt;</code>属性用默认添加的<code>class='tile-super'</code>，否则使用与当前方块的数值坐标有关的属性字符串</li>
+<li>子级<code>&lt;div&gt;</code>元素属性为默认添加<code>class='tile-inner'</code>，值为当前处理的方块数值</li>
+<li>如果<code>tile.previousPosition</code>属性存在，即当前方块非新出现方块，则调用动画帧绘制移动动画</li>
+<li>若当前方块存在<code>tile.mergedFrom</code>属性，即当前方块是合并后的新方块，则对合并的两个方块分别递归调用<code>addTile()</code>来绘制合并动画</li>
+<li>若以上两种都不是则为新产生的方块，默认添加<code>class='tile-new'</code>，对其绘制产生动画</li>
+<li>调用<code>this.tileContainer.appendChild()</code>对当前方块绘制数字</li>
+</ul>
+</li>
+<li>
+<p><code>applyClasses(element, classes)</code> ： 对指定元素应用应用css样式</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>applyClasses(element, classes) {
+    element.setAttribute(&quot;class&quot;, classes.join(&quot; &quot;));
+}
+</code></pre><ul>
+<li>调用<code>join()</code>把数值合并为一个字符串</li>
+</ul>
+</li>
+<li>
+<p><code>normalizePosition(position)</code> ： 返回格式化的坐标</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>normalizePosition(position) {
+    return { x: position.x + 1, y: position.y + 1 };
+}
+</code></pre><ul>
+<li>坐标X，Y值均加一保证数组处理时从1开始</li>
+</ul>
+</li>
+<li>
+<p><code>positionClass(position)</code> ： 利用位置确定css样式</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>positionClass(position) {
+    position = this.normalizePosition(position);
+    return &quot;tile-position-&quot; + position.x + &quot;-&quot; + position.y;
+}
+</code></pre></li>
+<li>
+<p><code>updateScore(score)</code> ： 当前分数更新动画驱动函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>updateScore(score) {
+    this.clearContainer(this.scoreContainer);
+    var difference = score - this.score;
+    this.score = score;
+    this.scoreContainer.textContent = this.score;
+    if (difference &gt; 0) {
+        var addition = document.createElement(&quot;div&quot;);
+        addition.classList.add(&quot;score-addition&quot;);
+        addition.textContent = &quot;+&quot; + difference;
+        this.scoreContainer.appendChild(addition);
+    }
+}
+</code></pre><ul>
+<li>首先<code>this.clearContainer()</code>清除当前分数，计算本次移动得分</li>
+<li>改变<code>this.scoreContainer.textContent</code>属性的值来更改分数显示</li>
+<li>若本次移动得分不为零则绘制分数改变的动画</li>
+</ul>
+</li>
+<li>
+<p><code>updateBestScore(bestScore)</code> ： 改变最高纪录动画驱动函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>updateBestScore(bestScore) {
+    this.bestContainer.textContent = bestScore;
+}
+</code></pre><ul>
+<li>改变<code>this.bestContainer.textContent</code>属性的值来绘制动画</li>
+</ul>
+</li>
+<li>
+<p><code>message(won)</code> ： 游戏状态改变</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>message(won) {
+    var type = won ? &quot;game-won&quot; : &quot;game-over&quot;;
+    var message = won ? &quot;You win!&quot; : &quot;Game over!&quot;;
+    this.messageContainer.classList.add(type);
+    this.messageContainer.getElementsByTagName(&quot;p&quot;)[0].textContent = message;
+}
+</code></pre><ul>
+<li>对赢得游戏和游戏失败分别作出响应动画</li>
+</ul>
+</li>
+<li>
+<p><code>clearMessage()</code> ： 清除游戏状态改变时的动画</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>clearMessage() {
+    this.messageContainer.classList.remove(&quot;game-won&quot;);
+    this.messageContainer.classList.remove(&quot;game-over&quot;);
+}
+</code></pre></li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 class="mume-header" id="1211-jsgridjs-%E6%96%B9%E6%A0%BC%E7%B1%BB">1.2.11. <code>/js/grid.js</code> : 方格类</h3>
+
+<p>定义Grid类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor(size, previousState) {
+    this.size = size;
+    this.cells = previousState ? this.fromState(previousState) : this.empty();
+}
+</code></pre><ul>
+<li>设置边长为<code>this.size</code></li>
+<li>若有之前游戏的存档则载入；若没有则初始化一个<code>empty()</code>的方格</li>
+</ul>
+</li>
+<li>
+<p>对象方法</p>
+<ol>
+<li>
+<p><code>empty()</code> ： 返回一个指定边长的空背景方格</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>empty() {
+    var cells = [];
+    for (var x = 0; x &lt; this.size; x++) {
+        var row = cells[x] = [];
+        for (var y = 0; y &lt; this.size; y++) {
+            row.push(null);
+        }
+    }
+    return cells;
+}
+</code></pre><ul>
+<li>新建一个<code>size x size</code>的二维数组并返回</li>
+</ul>
+</li>
+<li>
+<p><code>fromState(state)</code> ： 尝试读取可能存在的存档</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>fromState(state) {
+    var cells = [];
+    for (var x = 0; x &lt; this.size; x++) {
+        var row = cells[x] = [];
+        for (var y = 0; y &lt; this.size; y++) {
+            var tile = state[x][y];
+            row.push(tile ? new Tile(tile.position, tile.value) : null);
+        }
+    }
+    return cells;
+}
+</code></pre><ul>
+<li>若存在存档则通过<code>new Tile</code>对其数据进行恢复，若不存在返回null</li>
+</ul>
+</li>
+<li>
+<p><code>randomAvailableCell()</code> ： 返回一个当前随机的可用方格</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>randomAvailableCell() {
+    var cells = this.availableCells();
+    if (cells.length) {
+        return cells[Math.floor(Math.random() * cells.length)];
+    }
+}
+</code></pre><ul>
+<li>在可用方格数组中随机选择一个</li>
+</ul>
+</li>
+<li>
+<p><code>availableCells()</code> ： 返回当前可用的方格数组</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>availableCells() {
+    var cells = [];
+    this.eachCell(function (x, y, tile) {
+        if (!tile) {
+            cells.push({ x: x, y: y });
+        }
+    });
+    return cells;
+}
+</code></pre><ul>
+<li>调用<code>this.eachCell()</code>对每个方格进行遍历</li>
+<li>如果方格上不存在方块则将其信息计入<code>cells</code>数组，返回<code>cells</code></li>
+</ul>
+</li>
+<li>
+<p><code>eachCell(callback)</code> ： 遍历方格</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>eachCell(callback) {
+    for (var x = 0; x &lt; this.size; x++) {
+        for (var y = 0; y &lt; this.size; y++) {
+            callback(x, y, this.cells[x][y]);
+        }
+    }
+}
+</code></pre><ul>
+<li>对每个方格绑定回调函数<code>callback</code></li>
+</ul>
+</li>
+<li>
+<p><code>cellsAvailable()</code> ： 检查是否存在可用方格</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>cellsAvailable() {
+    return !!this.availableCells().length;
+}
+</code></pre><ul>
+<li>将<code>number</code>型强制转为<code>boolen</code>型，若当前存在方格可用返回<code>True</code></li>
+</ul>
+</li>
+<li>
+<p><code>cellAvailable(cell)</code> ： 检查指定方格是否已被占用</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>cellAvailable(cell) {
+    return !this.cellOccupied(cell);
+}
+</code></pre></li>
+<li>
+<p><code>cellOccupied(cell)</code> ： 返回指定方格是否被占用</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>cellOccupied(cell) {
+    return !!this.cellContent(cell);
+}
+</code></pre></li>
+<li>
+<p><code>cellContent(cell)</code> ： 检查指定位置是否在背景方格范围内</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>cellContent(cell) {
+    if (this.withinBounds(cell)) {
+        return this.cells[cell.x][cell.y];
+    }
+    else {
+        return null;
+    }
+}
+</code></pre><ul>
+<li>若<code>cell</code>在背景方格边界内则返回对应的方格元素，否则返回<code>null</code></li>
+</ul>
+</li>
+<li>
+<p><code>insertTile(tile)</code> ： 在指定方格位置插入方块</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>insertTile(tile) {
+    this.cells[tile.x][tile.y] = tile;
+}
+</code></pre></li>
+<li>
+<p><code>removeTile(tile)</code> ： 从指定位置移除方块</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>removeTile(tile) {
+    this.cells[tile.x][tile.y] = null;
+}
+</code></pre></li>
+<li>
+<p><code>withinBounds(position)</code> ： 判断某个坐标是否在背景方格边界内</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>withinBounds(position) {
+    return position.x &gt;= 0 &amp;&amp; position.x &lt; this.size &amp;&amp; position.y &gt;= 0 &amp;&amp; position.y &lt; this.size;
+}
+</code></pre><ul>
+<li>当且仅当X，Y坐标均满足条件时返回<code>True</code></li>
+</ul>
+</li>
+<li>
+<p><code>serialize()</code> ： 返回序列化的每个方块的状态</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>serialize() {
+    var cellState = [];
+    for (var x = 0; x &lt; this.size; x++) {
+        var row = cellState[x] = [];
+        for (var y = 0; y &lt; this.size; y++) {
+            row.push(this.cells[x][y] ? this.cells[x][y].serialize() : null);
+        }
+    }
+    return {
+        size: this.size,
+        cells: cellState
+    };
+}
+</code></pre><ul>
+<li>遍历背景方格的二维数组，用数组序列化储存每个方格的信息并返回</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 class="mume-header" id="1212-jstilejs-%E6%96%B9%E5%9D%97%E7%B1%BB">1.2.12. <code>/js/tile.js</code> : 方块类</h3>
+
+<p>定义Tile类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor(position, value) {
+    this.x = position.x;
+    this.y = position.y;
+    this.value = value || 2;
+    this.previousPosition = null;
+    this.mergedFrom = null;
+}
+</code></pre><ul>
+<li><code>x</code>, <code>y</code>分别保存方块的位置信息</li>
+<li><code>value</code>保存方块的值，若创建对象实例时未提供则默认值为2</li>
+<li><code>previousPosition</code>保存方块移动前的位置信息</li>
+<li><code>mergedFrom</code>保存方块合并事件的信息</li>
+</ul>
+</li>
+<li>
+<p>对象方法</p>
+<ol>
+<li>
+<p><code>savePosition()</code> : 储存移动前的位置信息</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>savePosition() {
+    this.previousPosition = { x: this.x, y: this.y };
+}
+</code></pre></li>
+<li>
+<p><code>updatePosition(position)</code> : 更新方块位置信息</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>updatePosition(position) {
+    this.x = position.x;
+    this.y = position.y;
+}
+</code></pre></li>
+<li>
+<p><code>serialize()</code> : 返回格式化的方块信息</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>serialize() {
+    return {
+        position: {
+            x: this.x,
+            y: this.y
+        },
+        value: this.value
+    };
+}
+</code></pre></li>
+</ol>
+</li>
+</ol>
+<hr>
+<h3 class="mume-header" id="1213-jslocal_storage_managerjs-%E5%A4%84%E7%90%86%E6%9C%AC%E5%9C%B0%E5%82%A8%E5%AD%98">1.2.13. <code>/js/local_storage_manager.js</code> : 处理本地储存</h3>
+
+<p>本地读写设置</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>window.fakeStorage = {
+    _data: {},
+    
+    setItem: function (id, val) {
+        return this._data[id] = String(val);
+    },
+    
+    getItem: function (id) {
+        return this._data.hasOwnProperty(id) ? this._data[id]: undefined;
+    },
+    
+    removeItem: function (id) {
+        return delete this._data[id];
+    },
+    
+    clear: function () {
+        return this._data = {};
+    }
+};
+</code></pre><ul>
+<li>一个替代方法，利用JSON解析来在<code>window.localStorage</code>不被支持的况下储存游戏</li>
+<li>分别实现了读、写、删除与清空功能</li>
+</ul>
+<p>定义LocalStorageManager类</p>
+<ol>
+<li>
+<p>构造函数</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>constructor() {
+    this.bestScoreKey = &quot;bestScore&quot;;
+    this.gameStateKey = &quot;gameState&quot;;
+    var supported = this.localStorageSupported();
+    this.storage = supported ? window.localStorage : window.fakeStorage;
+}
+</code></pre><ul>
+<li>先把<code>bestScoreKey</code>和<code>gameStateKey</code>的键赋为<code>bestScore</code>与<code>gameState</code></li>
+<li>通过<code>this.localStorageSupported()</code>测试浏览器是否支持<code>window.localStorage</code>，若不支持则采用<code>window.fakeStorage</code></li>
+</ul>
+</li>
+<li>
+<p>对象方法</p>
+<ol>
+<li>
+<p><code>localStorageSupported()</code> ： 测试当前浏览器是否支持<code>window.localStorage</code>对象</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>localStorageSupported() {
+    var testKey = &quot;test&quot;;
+    try {
+        var storage = window.localStorage;
+        storage.setItem(testKey, &quot;1&quot;);
+        storage.removeItem(testKey);
+        return true;
+    }
+    catch (error) {
+        return false;
+    }
+}
+</code></pre><ul>
+<li>用<code>try...catch</code>测试<code>window.localStorage</code>对象储存，若报错则改用<code>window.fakeStorage</code></li>
+</ul>
+</li>
+<li>
+<p><code>getBestScore()</code>/<code>setBestScore(score)</code> ： 读/写历史纪录最高成绩</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>getBestScore() {
+    return this.storage.getItem(this.bestScoreKey) || 0;
+}
+
+setBestScore(score) {
+    this.storage.setItem(this.bestScoreKey, score);
+}
+</code></pre><ul>
+<li>若未成功读取则置零</li>
+</ul>
+</li>
+<li>
+<p><code>getGameState()</code>/<code>setGameState(gameState)</code> ： 读/写游戏状态</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>getGameState() {
+    var stateJSON = this.storage.getItem(this.gameStateKey);
+    return stateJSON ? JSON.parse(stateJSON) : null;
+}
+
+setGameState(gameState) {
+    this.storage.setItem(this.gameStateKey, JSON.stringify(gameState));
+}
+</code></pre><ul>
+<li>以Json字符串保存/读取游戏状态，实现读档功能</li>
+<li><code>JSON.parse</code>解析JSON字符串，<code>JSON.stringify</code>将对象序列化为JSON字符串</li>
+</ul>
+</li>
+<li>
+<p><code>clearGameState()</code> ： 清除已保存的游戏状态</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>clearGameState() {
+    this.storage.removeItem(this.gameStateKey);
+}
+</code></pre></li>
+</ol>
+</li>
+</ol>
+<hr>
+<h2 class="mume-header" id="13-%E6%80%BB%E7%BB%93">1.3. 总结</h2>
+
+<p>整个工程淋漓尽致地体现了OOP的思想，将每部分都独立定义为一个类并为每个事件都写了一个方法。这样做的好处在于定义好逻辑及其接口后写游戏的主逻辑时极为方便且便于后期维护和测试，但由于对方法划分过于细致，经常出现调用一个方法需要层层垂直向下调用到大量的方法（而实际上本可以将其全部写在一个方法内）。</p>
+<p>代码充分运用了<code>JavaScript</code>中对象的<code>prototype</code>属性来改变其继承原型的属性和方法，这极大地减少了代码量。由于<code>JavaScript</code>中对当前对象的调用经常会出现<code>this</code>指代不明的情况，因此通过定义中间变量来明确方法执行的作用域。</p>
+<p>游戏中所有的动画效果交由<code>css</code>完成，<code>JavaScript</code>只负责游戏的逻辑控制和与用户的交互。控制方块的移动合并事件部分的算法思想非常具有参考价值。</p>
+<p>我个人作为一个后端而言，在阅读这个工程后受益匪浅。以前虽然对<code>JavaScript</code>有过基础的了解但是一些具体的细节理解的不是很清楚。通过这个工程让我对<code>JavaScript</code>的继承和原型链、内存管理以及<code>JavaScript</code>语言本身的并发模型有了更深的了解和认识。</p>
+<hr>
+<h2 class="mume-header" id="14-license">1.4. License</h2>
+
+<p>This project is licensed under the <a href="https://github.com/Mraru/2048/blob/master/LICENSE">MIT license</a>.</p>
+
+      </div>
+      
+      
+    </body>
+    
+    
+    
+    
+    
+    
+    
+  </html>
