@@ -50,7 +50,7 @@
 ---
 
 ### 1.2.4. `/js/application.js` : 初始化渲染
-```
+```javascript
 window.requestAnimationFrame(function () {
     new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
 });
@@ -63,7 +63,7 @@ window.requestAnimationFrame(function () {
 ### 1.2.5. `/js/game_manager.js` : 游戏主事件驱动
 定义`GameManager`类
 1. 构造函数
-	```
+	```javascript
     constructor(size, InputManager, Actuator, StorageManager) {
         this.size = size;
         this.inputManager = new InputManager;
@@ -86,7 +86,7 @@ window.requestAnimationFrame(function () {
 
 2. 对象方法
 	1. `setup()` ： 初始化游戏
-        ```
+        ```javascript
         setup() {
             var previousState = this.storageManager.getGameState();
             if (previousState) {
@@ -111,7 +111,7 @@ window.requestAnimationFrame(function () {
         - 若是新游戏则创建`size x size`的方格并初始化各类参数，更新第一次`actuate()`
 
     2. `restart()` ： 重启游戏并清除当前状态的储存
-        ```
+        ```javascript
         restart() {
             this.storageManager.clearGameState();
             this.actuator.continueGame();
@@ -123,7 +123,7 @@ window.requestAnimationFrame(function () {
         - 调用`this.setup()`新建游戏
 
     3. `keepPlaying()` ： 允许玩家在得分超过2048后继续游戏
-        ```
+        ```javascript
         keepPlaying() {
             this.keepPlaying = true;
             this.actuator.continueGame();
@@ -133,7 +133,7 @@ window.requestAnimationFrame(function () {
         - 调用`this.actuator.continueGame()`清除当前在HTML中显示的游戏胜利弹窗
 
     4. `isGameTerminated()` : 当用户失败或赢得游戏或不继续玩则返回`True`
-        ```
+        ```javascript
         isGameTerminated() {
             return this.over || (this.won && !this.keepPlaying);
         }
@@ -143,7 +143,7 @@ window.requestAnimationFrame(function () {
         - `this.keepPlaying`指示用户是否继续玩
 
     5. `addStartTiles()` : 创造最初始方块
-        ```
+        ```javascript
         addStartTiles() {
             for (var i = 0; i < this.startTiles; i++) {
                 this.addRandomTile();
@@ -154,7 +154,7 @@ window.requestAnimationFrame(function () {
         - `this.addRandomTile()`为初始的每个方块分配随机的数值
 
     6. `addRandomTile()` : 为初始方块分配随机数值
-        ```
+        ```javascript
         addRandomTile() {
             if (this.grid.cellsAvailable()) {
                 var value = Math.random() < 0.9 ? 2 : 4;
@@ -169,7 +169,7 @@ window.requestAnimationFrame(function () {
         - `this.gird.insertTile(tile)`把该方块放入其所在背景方格
 
     7. `actuate()` : 主驱动程序
-        ```
+        ```javascript
         actuate() {
             if (this.storageManager.getBestScore() < this.score) {
                 this.storageManager.setBestScore(this.score);
@@ -196,7 +196,7 @@ window.requestAnimationFrame(function () {
         - 最后调用`this.actuator.actuate()`将当前状态通过HTML DOM绘制
 
     8. `serialize()` : 将当前每个方格的状态作为对象返回
-        ```
+        ```javascript
         serialize() {
             return {
                 grid: this.grid.serialize(),
@@ -209,7 +209,7 @@ window.requestAnimationFrame(function () {
         ```
 
     9.  `prepareTiles()` : 储存所有方块的位置并重置合并信息
-        ```
+        ```javascript
         prepareTiles() {
             this.grid.eachCell(function (x, y, tile) {
                 if (tile) {
@@ -222,7 +222,7 @@ window.requestAnimationFrame(function () {
         - 调用`this.grid.eachCell()`对每个方格执行函数，该函数检查当前方格上是否存在方块，若存在则储存其位置并将其合并源位置清空
 
     10. `moveTile(tile, cell)` : 将一个方块移动到另一个方格上
-        ```
+        ```javascript
         moveTile(tile, cell) {
             this.grid.cells[tile.x][tile.y] = null;
             this.grid.cells[cell.x][cell.y] = tile;
@@ -235,7 +235,7 @@ window.requestAnimationFrame(function () {
         - 调用`tile.updatePosition()`方法更新方块内部储存的坐标信息
 
     11. `move(direction)` : 方块移动合并事件驱动函数
-        ```
+        ```javascript
         move(direction) {
             var self = this;
             if (this.isGameTerminated())
@@ -289,7 +289,7 @@ window.requestAnimationFrame(function () {
         - 调用`this.positionsEqual()`方法来检查上述步骤是否出错，若无误则在一个可用位置随机生成一个新的方块；此时调用`this.movesAvailable()`检查是否可以继续移动，若不能继续则游戏结束
 
     12. `getVector(direction)` : 将用户输入转换为方向向量
-        ```
+        ```javascript
         getVector(direction) {
             var map = {
                 0: { x: 0, y: -1 }, // Up
@@ -303,7 +303,7 @@ window.requestAnimationFrame(function () {
         - 返回输入`direction`所对应的方向向量
 
     13. `buildTraversals(vector)` ： 构建一个以正确的顺序遍历的位置列表
-        ```
+        ```javascript
         buildTraversals(vector) {
             var traversals = { x: [], y: [] };
             for (var pos = 0; pos < this.size; pos++) {
@@ -321,7 +321,7 @@ window.requestAnimationFrame(function () {
         - 最后两个`if`语句确保此遍历数组永远是从移动方向的最远端开始遍历
 
     14. `findFarthestPosition(cell, vector)` ： 返回指定坐标在指定方向的最远可用位置
-        ```
+        ```javascript
         findFarthestPosition(cell, vector) {
             var previous;
             do {
@@ -339,7 +339,7 @@ window.requestAnimationFrame(function () {
         - `next`值用于储存需要检查是否需要合并的位置
 
     15. `movesAvailable()` ： 检查是否存在可移动方块
-        ```
+        ```javascript
         movesAvailable() {
             return this.grid.cellsAvailable() || this.tileMatchesAvailable();
         }
@@ -347,7 +347,7 @@ window.requestAnimationFrame(function () {
         - 当存在可用方格(可生成新的方块)或存在可合并方块时返回`True`，否则返回`False`
 
     16. `tileMatchesAvailable()` ： 检查可用的匹配之间的数值
-        ```
+        ```javascript
         tileMatchesAvailable() {
             var self = this;
             var tile;
@@ -373,7 +373,7 @@ window.requestAnimationFrame(function () {
         - 若返回`true`则可以合并
 
     17. `positionsEqual(first, second)` ： 检查`first`与`second`坐标是否一致
-        ```
+        ```javascript
         positionsEqual(first, second) {
             return first.x === second.x && first.y === second.y;
         }
@@ -382,7 +382,7 @@ window.requestAnimationFrame(function () {
 ---
 
 ### 1.2.6. `/js/bind.js` : 改写绑定事件
-```
+```javascript
 Function.prototype.bind = Function.prototype.bind || function (target) {
   var self = this;
   return function (args) {
@@ -399,7 +399,7 @@ Function.prototype.bind = Function.prototype.bind || function (target) {
 
 ### 1.2.7. `/js/classlist.js` : 初始化与操作 HTML DOM 相关的设置
 
-```
+```javascript
 var prototype = Array.prototype,
     push = prototype.push,
     splice = prototype.splice,
@@ -409,7 +409,7 @@ var prototype = Array.prototype,
 
 定义`DOMTokenList`类
 1. 构造函数
-    ```
+    ```javascript
     constructor(el) {
           this.el = el;
           var classes = el.className.replace(/^\s+|\s+$/g, '').split(/\s+/);
@@ -423,7 +423,7 @@ var prototype = Array.prototype,
 2. 覆写`DOMTokenList`的原型方法 : `DOMTokenList.prototype`
 
     1. `add` ： 将节点元素加入数组来构造节点元素列表
-        ```
+        ```javascript
         add: function (token) {
           if (this.contains(token)) return;
           push.call(this, token);
@@ -433,7 +433,7 @@ var prototype = Array.prototype,
         - 若当前节点元素已经存在于数组则返回；若不存在则将其加入数组
 
     2. `contains` ： 判断一个节点元素是否已经存在与数组中
-        ```
+        ```javascript
         contains: function (token) {
           return this.el.className.indexOf(token) != -1;
         }
@@ -441,14 +441,14 @@ var prototype = Array.prototype,
         - 直接通过查找此元素在数组中的下标，判断其是否为-1（意味着不存在）
 
     3. `item` ： 返回`index`下标对应的元素
-        ```
+        ```javascript
         item: function (index) {
             return this[index] || null;
             }
         ```
 
     4. `remove` ： 从数组中删除元素
-        ```
+        ```javascript
         remove: function (token) {
           if (!this.contains(token)) return;
           for (var i = 0; i < this.length; i++) {
@@ -462,14 +462,14 @@ var prototype = Array.prototype,
         - 如果存在则从第一个元素开始查找直至找到第一个该元素所在位置，`add`方法保证了在数组中每个元素只会出现一次，则调用`splice`函数将其删除
 
     5. `toString` ： 将数组每个元素直接添加空格后转为字符串
-        ```
+        ```javascript
         toString: function () {
           return join.call(this, ' ');
         }
         ```
 
     6. `toggle` ： 切换元素在数组中的存在性
-        ```
+        ```javascript
         toggle: function (token) {
           if (!this.contains(token)) {
             this.add(token);
@@ -483,13 +483,13 @@ var prototype = Array.prototype,
 
 覆写系统预定义对象并定义对象方法
 1. 改写浏览器预定义对象
-    ```
+    ```javascript
     window.DOMTokenList = DOMTokenList
     ```
     将`window.DOMTokenList`定义为`DOMTokenList`的实例
 
 2. 定义对象的`Get`方法
-    ```
+    ```javascript
     function defineElementGetter(obj, prop, getter) {
         if (Object.defineProperty) {
           Object.defineProperty(obj, prop, {
@@ -504,7 +504,7 @@ var prototype = Array.prototype,
 ---
 
 ### 1.2.8. `/js/animframe.js` : 处理在不同浏览器上与更新动画相关的设置
-```
+```javascript
 var lastTime = 0;
   var vendors = ['webkit', 'moz'];
   for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
@@ -516,7 +516,7 @@ var lastTime = 0;
 对不同浏览器分别重写调用动画和回调动画函数并绑定给函数对象。
 
 若上述预设值均不被当前浏览器接受，则手动重写该函数。`id`是回调列表中唯一的标识，可以传这个值给`window.cancelAnimationFrame()`以取消回调函数。
-```
+```javascript
 if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = function (callback) {
       var currTime = new Date().getTime();
@@ -542,7 +542,7 @@ if (!window.cancelAnimationFrame) {
 ### 1.2.9. `/js/keyboard_input_manager.js` : 处理输入事件
 定义`KeyboardInputManager`类
 1. 构造函数
-    ```
+    ```javascript
     constructor() {
         this.events = {};
         if (window.navigator.msPointerEnabled) {
@@ -564,7 +564,7 @@ if (!window.cancelAnimationFrame) {
 
 2. 对象方法
     1. `on(event, callback)` ： 绑定事件与回调函数
-        ```
+        ```javascript
         on(event, callback) {
             if (!this.events[event]) {
                 this.events[event] = [];
@@ -575,7 +575,7 @@ if (!window.cancelAnimationFrame) {
         - 将多个回调函数放在同一个事件下对应的数组中
 
     2. `emit(event, data)` ： 
-        ```
+        ```javascript
         emit(event, data) {
             var callbacks = this.events[event];
             if (callbacks) {
@@ -588,7 +588,7 @@ if (!window.cancelAnimationFrame) {
         - 通过`this.events[event]`获取该事件对应的回调函数并逐个对`data`执行
 
     3. `listen()` ： 监听事件响应函数
-        ```
+        ```javascript
         listen() {
             var self = this;
             var map = {
@@ -672,7 +672,7 @@ if (!window.cancelAnimationFrame) {
         - 在移动端只对`game-container`进行监听，意味着只有在`game-container`中滑动有效
 
     4. `restart(event)` ： 重新开始游戏
-        ```
+        ```javascript
         restart(event) {
             event.preventDefault();
             this.emit("restart");
@@ -681,7 +681,7 @@ if (!window.cancelAnimationFrame) {
         - 通过`event.preventDefault()`当前与事件关联的默认动作，再通过`this.emit()`重新开始游戏
 
     5. `keepPlaying(event)` ： 达到2048分后继续玩
-        ```
+        ```javascript
         keepPlaying(event) {
             event.preventDefault();
             this.emit("keepPlaying");
@@ -690,7 +690,7 @@ if (!window.cancelAnimationFrame) {
         - 通过`event.preventDefault()`当前与事件关联的默认动作，再通过`this.emit()`调用与`keepPlaying()`相关的事件
 
     6. `bindButtonPress(selector, fn)` ： 将某事件绑定到按钮点击事件上
-        ```
+        ```javascript
         bindButtonPress(selector, fn) {
             var button = document.querySelector(selector);
             button.addEventListener("click", fn.bind(this));
@@ -706,7 +706,7 @@ if (!window.cancelAnimationFrame) {
 ### 1.2.10. `/js/html_actuator.js` : 处理 DOM 交互操作与绘图
 定义HTMLActuator类
 1. 构造函数
-    ```
+    ```javascript
     constructor() {
     this.tileContainer = document.querySelector(".tile-container");
     this.scoreContainer = document.querySelector(".score-container");
@@ -720,7 +720,7 @@ if (!window.cancelAnimationFrame) {
 
 2. 对象方法
     1. `actuate(grid, metadata)` ： 界面绘制驱动程序
-        ```
+        ```javascript
         actuate(grid, metadata) {
             var self = this;
             window.requestAnimationFrame(function () {
@@ -751,14 +751,14 @@ if (!window.cancelAnimationFrame) {
         - 最后检测该玩家是否已经胜利或失败，若是则绘制相应动画
 
     2. `continueGame()` ： 清除在胜利/失败后显示的动画让玩家继续游戏
-        ```
+        ```javascript
         continueGame() {
             this.clearMessage();
         }
         ```
 
     3. `clearContainer(container)` ： 清除当前方格上的方块
-        ```
+        ```javascript
         clearContainer(container) {
             while (container.firstChild) {
                 container.removeChild(container.firstChild);
@@ -768,7 +768,7 @@ if (!window.cancelAnimationFrame) {
         - 调用 DOM 对象的`removeChild()`方法来移除方格上的方块
 
     4. `addTile(tile)` ： 为方块渲染数字
-        ```
+        ```javascript
         addTile(tile) {
             var self = this;
             var wrapper = document.createElement("div");
@@ -812,7 +812,7 @@ if (!window.cancelAnimationFrame) {
         - 调用`this.tileContainer.appendChild()`对当前方块绘制数字
 
     5. `applyClasses(element, classes)` ： 对指定元素应用应用css样式
-        ```
+        ```javascript
         applyClasses(element, classes) {
             element.setAttribute("class", classes.join(" "));
         }
@@ -820,7 +820,7 @@ if (!window.cancelAnimationFrame) {
         - 调用`join()`把数值合并为一个字符串
 
     6. `normalizePosition(position)` ： 返回格式化的坐标
-        ```
+        ```javascript
         normalizePosition(position) {
             return { x: position.x + 1, y: position.y + 1 };
         }
@@ -828,7 +828,7 @@ if (!window.cancelAnimationFrame) {
         - 坐标X，Y值均加一保证数组处理时从1开始
 
     7. `positionClass(position)` ： 利用位置确定css样式
-        ```
+        ```javascript
         positionClass(position) {
             position = this.normalizePosition(position);
             return "tile-position-" + position.x + "-" + position.y;
@@ -836,7 +836,7 @@ if (!window.cancelAnimationFrame) {
         ```
 
     8. `updateScore(score)` ： 当前分数更新动画驱动函数
-        ```
+        ```javascript
         updateScore(score) {
             this.clearContainer(this.scoreContainer);
             var difference = score - this.score;
@@ -855,7 +855,7 @@ if (!window.cancelAnimationFrame) {
         - 若本次移动得分不为零则绘制分数改变的动画
 
     9. `updateBestScore(bestScore)` ： 改变最高纪录动画驱动函数
-        ```
+        ```javascript
         updateBestScore(bestScore) {
             this.bestContainer.textContent = bestScore;
         }
@@ -863,7 +863,7 @@ if (!window.cancelAnimationFrame) {
         - 改变`this.bestContainer.textContent`属性的值来绘制动画
 
     10. `message(won)` ： 游戏状态改变
-        ```
+        ```javascript
         message(won) {
             var type = won ? "game-won" : "game-over";
             var message = won ? "You win!" : "Game over!";
@@ -874,7 +874,7 @@ if (!window.cancelAnimationFrame) {
         - 对赢得游戏和游戏失败分别作出响应动画
 
     11. `clearMessage()` ： 清除游戏状态改变时的动画
-        ```
+        ```javascript
         clearMessage() {
             this.messageContainer.classList.remove("game-won");
             this.messageContainer.classList.remove("game-over");
@@ -886,7 +886,7 @@ if (!window.cancelAnimationFrame) {
 ### 1.2.11. `/js/grid.js` : 方格类
 定义Grid类
 1. 构造函数
-    ```
+    ```javascript
     constructor(size, previousState) {
         this.size = size;
         this.cells = previousState ? this.fromState(previousState) : this.empty();
@@ -897,7 +897,7 @@ if (!window.cancelAnimationFrame) {
 
 2. 对象方法
     1. `empty()` ： 返回一个指定边长的空背景方格
-        ```
+        ```javascript
         empty() {
             var cells = [];
             for (var x = 0; x < this.size; x++) {
@@ -912,7 +912,7 @@ if (!window.cancelAnimationFrame) {
         - 新建一个`size x size`的二维数组并返回
 
     2. `fromState(state)` ： 尝试读取可能存在的存档
-        ```
+        ```javascript
         fromState(state) {
             var cells = [];
             for (var x = 0; x < this.size; x++) {
@@ -928,7 +928,7 @@ if (!window.cancelAnimationFrame) {
         - 若存在存档则通过`new Tile`对其数据进行恢复，若不存在返回null
 
     3. `randomAvailableCell()` ： 返回一个当前随机的可用方格
-        ```
+        ```javascript
         randomAvailableCell() {
             var cells = this.availableCells();
             if (cells.length) {
@@ -939,7 +939,7 @@ if (!window.cancelAnimationFrame) {
         - 在可用方格数组中随机选择一个
 
     4. `availableCells()` ： 返回当前可用的方格数组
-        ```
+        ```javascript
         availableCells() {
             var cells = [];
             this.eachCell(function (x, y, tile) {
@@ -954,7 +954,7 @@ if (!window.cancelAnimationFrame) {
         - 如果方格上不存在方块则将其信息计入`cells`数组，返回`cells`
 
     5. `eachCell(callback)` ： 遍历方格
-        ```
+        ```javascript
         eachCell(callback) {
             for (var x = 0; x < this.size; x++) {
                 for (var y = 0; y < this.size; y++) {
@@ -966,7 +966,7 @@ if (!window.cancelAnimationFrame) {
         - 对每个方格绑定回调函数`callback`
 
     6. `cellsAvailable()` ： 检查是否存在可用方格
-        ```
+        ```javascript
         cellsAvailable() {
             return !!this.availableCells().length;
         }
@@ -974,21 +974,21 @@ if (!window.cancelAnimationFrame) {
         - 将`number`型强制转为`boolen`型，若当前存在方格可用返回`True`
 
     7. `cellAvailable(cell)` ： 检查指定方格是否已被占用
-        ```
+        ```javascript
         cellAvailable(cell) {
             return !this.cellOccupied(cell);
         }
         ```
 
     8. `cellOccupied(cell)` ： 返回指定方格是否被占用
-        ```
+        ```javascript
         cellOccupied(cell) {
             return !!this.cellContent(cell);
         }
         ```
 
     9. `cellContent(cell)` ： 检查指定位置是否在背景方格范围内
-        ```
+        ```javascript
         cellContent(cell) {
             if (this.withinBounds(cell)) {
                 return this.cells[cell.x][cell.y];
@@ -1001,21 +1001,21 @@ if (!window.cancelAnimationFrame) {
         - 若`cell`在背景方格边界内则返回对应的方格元素，否则返回`null`
 
     10. `insertTile(tile)` ： 在指定方格位置插入方块
-        ```
+        ```javascript
         insertTile(tile) {
             this.cells[tile.x][tile.y] = tile;
         }
         ```
 
     11. `removeTile(tile)` ： 从指定位置移除方块
-        ```
+        ```javascript
         removeTile(tile) {
             this.cells[tile.x][tile.y] = null;
         }
         ```
 
     12. `withinBounds(position)` ： 判断某个坐标是否在背景方格边界内
-        ```
+        ```javascript
         withinBounds(position) {
             return position.x >= 0 && position.x < this.size && position.y >= 0 && position.y < this.size;
         }
@@ -1023,7 +1023,7 @@ if (!window.cancelAnimationFrame) {
         - 当且仅当X，Y坐标均满足条件时返回`True`
 
     13. `serialize()` ： 返回序列化的每个方块的状态
-        ```
+        ```javascript
         serialize() {
             var cellState = [];
             for (var x = 0; x < this.size; x++) {
@@ -1045,7 +1045,7 @@ if (!window.cancelAnimationFrame) {
 ### 1.2.12. `/js/tile.js` : 方块类
 定义Tile类
 1. 构造函数
-    ```
+    ```javascript
     constructor(position, value) {
         this.x = position.x;
         this.y = position.y;
@@ -1061,14 +1061,14 @@ if (!window.cancelAnimationFrame) {
 
 2. 对象方法
     1. `savePosition()` : 储存移动前的位置信息
-        ```
+        ```javascript
         savePosition() {
             this.previousPosition = { x: this.x, y: this.y };
         }
         ```
 
     2. `updatePosition(position)` : 更新方块位置信息
-        ```
+        ```javascript
         updatePosition(position) {
             this.x = position.x;
             this.y = position.y;
@@ -1076,7 +1076,7 @@ if (!window.cancelAnimationFrame) {
         ```
 
     3. `serialize()` : 返回格式化的方块信息
-        ```
+        ```javascript
         serialize() {
             return {
                 position: {
@@ -1092,7 +1092,7 @@ if (!window.cancelAnimationFrame) {
 
 ### 1.2.13. `/js/local_storage_manager.js` : 处理本地储存
 本地读写设置
-```
+```javascript
 window.fakeStorage = {
     _data: {},
     
@@ -1119,7 +1119,7 @@ window.fakeStorage = {
 定义LocalStorageManager类
 
 1. 构造函数
-    ```
+    ```javascript
     constructor() {
         this.bestScoreKey = "bestScore";
         this.gameStateKey = "gameState";
@@ -1133,7 +1133,7 @@ window.fakeStorage = {
 
 2. 对象方法
     1. `localStorageSupported()` ： 测试当前浏览器是否支持`window.localStorage`对象
-        ```
+        ```javascript
         localStorageSupported() {
             var testKey = "test";
             try {
@@ -1150,7 +1150,7 @@ window.fakeStorage = {
         - 用`try...catch`测试`window.localStorage`对象储存，若报错则改用`window.fakeStorage`
     
     2. `getBestScore()`/`setBestScore(score)` ： 读/写历史纪录最高成绩
-        ```
+        ```javascript
         getBestScore() {
             return this.storage.getItem(this.bestScoreKey) || 0;
         }
@@ -1162,7 +1162,7 @@ window.fakeStorage = {
         - 若未成功读取则置零
 
     3. `getGameState()`/`setGameState(gameState)` ： 读/写游戏状态
-        ```
+        ```javascript
         getGameState() {
             var stateJSON = this.storage.getItem(this.gameStateKey);
             return stateJSON ? JSON.parse(stateJSON) : null;
@@ -1176,7 +1176,7 @@ window.fakeStorage = {
         - `JSON.parse`解析JSON字符串，`JSON.stringify`将对象序列化为JSON字符串
 
     4. `clearGameState()` ： 清除已保存的游戏状态
-        ```
+        ```javascript
         clearGameState() {
             this.storage.removeItem(this.gameStateKey);
         }
